@@ -1,6 +1,6 @@
 [data-theme="light"]{color-scheme:light;}[data-theme="dark"]{color-scheme:dark;}
-::selection {background: light-dark(#fa7373, #9e0000);}
-::-moz-selection {background: light-dark(#fa7373, #9e0000);}
+::selection{background: light-dark(rgba(255,55,55,0.5),rgba(200,0,0,0.5));}
+::-moz-selection{background: light-dark(rgba(255,55,55,0.5),rgba(200,0,0,0.5));}
 body{
   background-color: light-dark(#d1d1d1, #1d1d1d);
   color: light-dark(black, white);
