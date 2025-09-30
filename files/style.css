@@ -2,22 +2,23 @@
 body{
   background-color: light-dark(#d1d1d1, #1d1d1d);
   color: light-dark(black, white);
-  font-family: Courier New;
+  font-family: Courier New, Courier-New, 'Courier New', monospace;
 }
 P{font-family: inherit;}
 button{
   font-family: inherit;
-  background-color: light-dark(#e5e5e5,#454545);
+  background-color: light-dark(#e5e5e5, #454545);
   border: none;
   text-align: center;
   border-radius: 5px;
 }
+a{font-family: inherit;}
 a:link, a:visited {
-  color: light-dark(black, white);
+  color: inherit;
   text-decoration: none;
 }
 a:hover, a:active {
-  color: light-dark(black, white);
+  color: inherit;
   cursor:pointer;
 }
 input {
