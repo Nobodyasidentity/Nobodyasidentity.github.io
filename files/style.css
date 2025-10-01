@@ -2,6 +2,7 @@
 ::selection{background: light-dark(rgba(255,55,55,0.5),rgba(200,0,0,0.5));}
 ::-moz-selection{background: light-dark(rgba(255,55,55,0.5),rgba(200,0,0,0.5));}
 body{
+  font-size: 16px;
   background-color: light-dark(#d1d1d1, #1d1d1d);
   color: light-dark(black, white);
   font-family: Courier New, Courier-New, 'Courier New', monospace;
@@ -39,4 +40,5 @@ input {
   text-align: center;
   bottom: 0px;
   width: 100%;
+  font-size: 8px;
 }
