@@ -42,5 +42,6 @@ input {
   text-align: center;
   bottom: 3px;
   width: 100%;
-  font-size: 4px;
+  font-size: 6px;
+  filter: brightness(85%);
 }
