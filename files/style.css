@@ -34,3 +34,9 @@ input {
 }
 .icon[data-theme="light"]{filter: invert(0);}
 .icon[data-theme="dark"]{filter: invert(1);}
+.footer{ 
+  position: fixed;
+  text-align: center;
+  bottom: 0px;
+  width: 100%;
+}
