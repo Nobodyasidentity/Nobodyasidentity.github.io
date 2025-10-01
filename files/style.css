@@ -7,15 +7,16 @@ body{
   color: light-dark(black, white);
   font-family: Courier New, Courier-New, 'Courier New', monospace;
 }
-P{font-family: inherit;}
+P{font-family: inherit;font-size:inherit;}
 button{
   font-family: inherit;
+  font-size: inherit;
   background-color: light-dark(#e5e5e5, #454545);
   border: none;
   text-align: center;
   border-radius: 5px;
 }
-a{font-family: inherit;}
+a{font-family:inherit;font-size:inherit;}
 a:link, a:visited {
   color: inherit;
   text-decoration: none;
@@ -26,6 +27,7 @@ a:hover, a:active {
 }
 input {
   font-family: inherit;
+  font-size: inherit;
   background-color: light-dark(#e6e6e6, #121212);
   overflow: auto;
   border-radius: 5px;
