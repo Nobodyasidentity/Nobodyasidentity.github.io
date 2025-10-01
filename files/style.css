@@ -24,6 +24,7 @@ a:link, a:visited {
 a:hover, a:active {
   color: inherit;
   cursor:pointer;
+  filter: brightness(85%);
 }
 input {
   font-family: inherit;
@@ -43,5 +44,5 @@ input {
   bottom: 3px;
   width: 100%;
   font-size: 6px;
-  filter: brightness(85%);
+  filter: brightness(70%);
 }
