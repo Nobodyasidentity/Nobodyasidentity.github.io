@@ -1,4 +1,4 @@
-Copyright © 2025, Nobodyasidentity.github.io– All the right reserved.
+Copyright © 2025, Nobodyasidentity – All the right reserved.
 
 [website](https://nobodyasidentity.github.io/)
 ### license:
