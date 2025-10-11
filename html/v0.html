@@ -6,10 +6,32 @@
     <link href="/files/style.css" rel="stylesheet" type="text/css" media="all">
     <link rel="icon" href="/files/icon.png?">
     <title>Nobody</title>
+    <style>
+      div.content{
+        border-style: dashed;
+        border-width: 1px;
+        border-color: light-dark(#808080, #454545);
+        border-radius: 5px;
+        background-color: inherit;
+        width: fit-content;
+      }
+      div.content iframe {
+        border-style: hidden;
+        border-radius: 5px;
+        height: 300px;
+        width: 99vw;
+        resize: both;
+        overflow: auto;
+      }
+      textarea.code{
+        height: 100px;
+        width: 99vw;
+      }
+    </style>
   </head>
   <body>
     <div class="footer">Copyright © 2025, Nobodyasidentity – All the right reserved.</div>
-    <textarea id="code" onkeyup="trygen()"></textarea><br>
+    <textarea class="code" id="code" onkeyup="trygen()"></textarea><br>
     <input type="checkbox" id="doautoupd"><label for="doautoupd">Auto</label>
     <button onclick="gen()">Generate</button><br><br>
     <div class="content"><iframe id="iframe" srcdoc='<html data-theme="dark"><link href="/files/style.css" rel="stylesheet" type="text/css" media="all"></html>'></iframe></div>
