@@ -29,11 +29,11 @@ a:hover, a:active {
 input {
   font-family: inherit;
   font-size: inherit;
-  background-color: light-dark(#e6e6e6, #121212);
+  background-color: light-dark(#dcdcdc, #2c2c2c);
   overflow: auto;
   border: solid 2px;
   border-radius: 5px;
-  border-color: light-dark(#dcdcdc, #2c2c2c);
+  border-color: light-dark(#e5e5e5, #454545);
   margin: 0;
   padding: 0;
 }
