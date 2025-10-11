@@ -9,5 +9,25 @@
   </head>
   <body>
     <div class="footer">Copyright © 2025, Nobodyasidentity – All the right reserved.</div>
+    <textarea id="code" onkeyup="trygen()"></textarea><br>
+    <input type="checkbox" id="doautoupd"><label for="doautoupd">Auto</label>
+    <button onclick="gen()">Generate</button><br><br>
+    <div class="content"><iframe id="iframe" srcdoc='<html data-theme="dark"><link href="/files/style.css" rel="stylesheet" type="text/css" media="all"></html>'></iframe></div>
+    <script>
+      function getUrlVars(){var vars={};var parts=window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(m,key,value){vars[key]=value;});return vars;}
+      const code = document.getElementById('code')
+      const iframe = document.getElementById('iframe')
+      var query = getUrlVars()
+      function gen(){
+        iframe.contentDocument.body.innerHTML = code.value
+      }
+      function trygen(){
+        if(document.getElementById('doautoupd').checked==true){gen()}
+      }
+      function onLoad(){
+        if (query['genonload']!=undefined){gen()}
+      }
+      window.onload=onLoad
+    </script>
   </body>
 </html>
