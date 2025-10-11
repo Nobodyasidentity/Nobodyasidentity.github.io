@@ -46,6 +46,10 @@
       function trygen(){
         if(document.getElementById('doautoupd').checked==true){gen()}
       }
+      function copy2clipboard(txt){
+        navigator.clipboard.writeText(txt)
+        alert('copied: '+txt)
+      }
       function onLoad(){
         if (query['code']!=undefined){code.value=atob(decodeURIComponent(query['code']))}
         if (query['genonload']!=undefined){gen()}
