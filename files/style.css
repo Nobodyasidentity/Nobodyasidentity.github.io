@@ -33,6 +33,7 @@ input {
   overflow: auto;
   border-radius: 5px;
   border-width: 0px;
+  border-color: light-dark(#e5e5e5, #454545);
   margin: 0;
   padding: 0;
 }
