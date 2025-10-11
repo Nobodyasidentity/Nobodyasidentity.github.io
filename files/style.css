@@ -16,6 +16,12 @@ button{
   text-align: center;
   border-radius: 5px;
 }
+button:hover {
+  background-color: light-dark(#dcdcdc, #2c2c2c);
+}
+button:active {
+  background-color: #808080
+}
 a{font-family:inherit;font-size:inherit;}
 a:link, a:visited {
   color: inherit;
@@ -26,7 +32,7 @@ a:hover, a:active {
   cursor:pointer;
   filter: brightness(85%);
 }
-input {
+input, textarea {
   font-family: inherit;
   font-size: inherit;
   background-color: light-dark(#dcdcdc, #2c2c2c);
