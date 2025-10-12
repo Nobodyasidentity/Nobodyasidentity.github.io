@@ -37,7 +37,7 @@
     <button onclick="document.getElementById('linkSettings').style.display=(this.innerHTML=='Link |')?'inline-block':'none';this.innerHTML=(this.innerHTML=='Link |')?'Link >':'Link |'">Link |</button>
     <div style="display:none" id="linkSettings">
       <input type="checkbox" id="generateonload" checked=true><label for="generateonload">Generate On Load</label>
-      <button onclick="copy2clipboard(encodeURIComponent(btoa(window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'code='+code.value)))">Copy Permanent Link</button>
+      <button onclick="copy2clipboard(window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'code='+encodeURIComponent(btoa(code.value)))">Copy Permanent Link</button>
     </div><br><br>
     <div class="content"><iframe id="iframe" srcdoc='<html data-theme="dark"><link href="/files/style.css" rel="stylesheet" type="text/css" media="all"></html>'></iframe></div>
     <script>
