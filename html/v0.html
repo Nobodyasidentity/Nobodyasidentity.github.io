@@ -61,7 +61,7 @@
           if(query['encoding']=='LZstr'){
             code.value=decodeURIComponent(atob(LZString.decompress(query['code'])))
           }else{
-            code.value=decodeURIComponent(atob(decodeURIComponent(query['code'])))
+            code.value=atob(decodeURIComponent(query['code']))
           }
         }
         if (query['genonload']!=undefined){gen()}
