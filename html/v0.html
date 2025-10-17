@@ -59,9 +59,9 @@
       function onLoad(){
         if (query['code']!=undefined){
           if(query['encoding']=='LZstr'){
-            code.value=decodeURIComponent(atob(LZString.decompress(query['code'])))
+            code.value=decodeURIComponent(LZString.decompress(query['code']));
           }else{
-            code.value=atob(decodeURIComponent(query['code']))
+            code.value=atob(decodeURIComponent(query['code']));
           }
         }
         if (query['genonload']!=undefined){gen()}
