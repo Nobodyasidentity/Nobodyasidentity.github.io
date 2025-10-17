@@ -58,10 +58,9 @@
       }
       function onLoad(){
         if (query['code']!=undefined){
-          if(equery['encoding'=='LZstr']){
+          if(query['encoding']=='LZstr'){
             code.value=decodeURIComponent(atob(LZString.decompress(query['code'])))
-          }
-          else{
+          }else{
             code.value=decodeURIComponent(atob(decodeURIComponent(query['code'])))
           }
         }
