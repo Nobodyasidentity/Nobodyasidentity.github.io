@@ -57,7 +57,14 @@
         alert('copied: '+txt)
       }
       function onLoad(){
-        if (query['code']!=undefined){code.value=decodeURIComponent(atob(decodeURIComponent(query['code'])))}
+        if (query['code']!=undefined){
+          if(equery['encoding'=='LZstr']){
+            code.value=decodeURIComponent(atob(LZString.decompress(query['code'])))
+          }
+          else{
+            code.value=decodeURIComponent(atob(decodeURIComponent(query['code'])))
+          }
+        }
         if (query['genonload']!=undefined){gen()}
       }
       window.onload=onLoad
