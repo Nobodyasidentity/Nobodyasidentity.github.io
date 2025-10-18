@@ -63,7 +63,7 @@
       }
       function genLink(){
         if(document.getElementById('encoded').value=='LZstr'){
-          copy2clipboard('https://'+window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'encoding=LZstr&code='+LZString.compress(encodeURIComponent(code.value))))
+          copy2clipboard('https://'+window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'encoding=LZstr&code='+LZString.compress(encodeURIComponent(code.value)))
         }else{
           copy2clipboard('https://'+window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'code='+encodeURIComponent(btoa(encodeURIComponent(code.value))))
         }
