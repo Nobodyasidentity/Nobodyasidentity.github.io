@@ -21,7 +21,7 @@ button:hover, select:hover {
   background-color: light-dark(#dcdcdc, #2c2c2c);
 }
 button:active, select:active {
-  background-color: #808080
+  background-color: #808080;
 }
 a{font-family:inherit;font-size:inherit;}
 a:link, a:visited {
