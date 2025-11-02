@@ -8,7 +8,8 @@ body{
   font-family: Courier New, Courier-New, 'Courier New', monospace;
 }
 P{font-family: inherit;font-size:inherit;}
-button, select
+*{font-family: inherit;font-size:inherit;}
+button, select{
   font-family: inherit;
   font-size: inherit;
   background-color: light-dark(#e5e5e5, #454545);
