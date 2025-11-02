@@ -53,3 +53,11 @@ input, textarea {
   font-size: 6px;
   filter: brightness(70%);
 }
+select{
+  font-family: inherit;
+  font-size: inherit;
+  background-color: light-dark(#e5e5e5, #454545);
+  border: none;
+  text-align: center;
+  border-radius: 5px;
+}
