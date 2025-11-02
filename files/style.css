@@ -17,10 +17,13 @@ button, select{
   text-align: center;
   border-radius: 5px;
 }
-button:hover, select:hover {
+button:hover{
   background-color: light-dark(#dcdcdc, #2c2c2c);
 }
-button:active, select:active {
+select:hover{
+  background-color: light-dark(#dcdcdc, #2c2c2c);
+}
+button:active{
   background-color: #808080;
 }
 a{font-family:inherit;font-size:inherit;}
