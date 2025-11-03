@@ -8,6 +8,12 @@
     <title>Nobody</title>
   </head>
   <body>
-    <center><h1>404 Page Not Found</h1><p>The Requested Page Was Not Found</p></center>
+    <br><center><h1>404 Page Not Found</h1><p>The Requested Page Was Not Found</p><br><p id="link"></p></center>
+    <script>
+      function onLoad(){
+        document.getElementById('link').innerText='"'+window.location.hostname+window.location.pathname+'"'
+      }
+      window.onload=onLoad
+    </script>
   </body>
 </html>
