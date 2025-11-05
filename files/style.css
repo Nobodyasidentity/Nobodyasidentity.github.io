@@ -44,8 +44,8 @@ input, textarea {
   margin: 0;
   padding: 0;
 }
-.icon[data-theme="light"]{filter: invert(0);}
-.icon[data-theme="dark"]{filter: invert(1);}
+[data-theme="light"] .icon{filter:invert(0);}
+[data-theme="dark"] .icon{filter:invert(1);}
 .footer{ 
   position: fixed;
   text-align: center;
