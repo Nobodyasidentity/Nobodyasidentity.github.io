@@ -18,7 +18,7 @@
   <body>
     <br><center><h1>404 Page Not Found</h1><p id="link">The Requested Page Was Not Found</p></center><br><div id="recommendations"> </div>
     <script>
-  (function () {
+  function onLoad(){
     document.getElementById('link').innerText='"'+window.location.hostname+window.location.pathname+'" Was Not Found'
     const TOP_N = 5;
     const pages = [
@@ -119,7 +119,8 @@
         .replace(/"/g, "&quot;");
     }
 
-  })();
+  };
+      window.onload=onLoad;
   </script>
   </body>
 </html>
