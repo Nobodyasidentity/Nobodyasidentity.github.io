@@ -37,9 +37,7 @@
     <button onclick="document.getElementById('linkSettings').style.display=(this.innerHTML=='Link |')?'inline-block':'none';this.innerHTML=(this.innerHTML=='Link |')?'Link >':'Link |'">Link |</button>
     <div style="display:none" id="linkSettings">
       <input type="checkbox" id="generateonload" checked=true><label for="generateonload"> Generate On Load</label>
-      <select id="encoding">
-        <option value="normal">Normal</option>
-      </select>
+      <!--<select id="encoding"><option value="normal">Normal</option></select>-->
       <button onclick="genLink()">Copy Permanent Link</button>
     </div><br><br>
     <div class="content"><iframe id="iframe" srcdoc='<html data-theme="dark"><link href="/files/style.css" rel="stylesheet" type="text/css" media="all"></html>'></iframe></div>
