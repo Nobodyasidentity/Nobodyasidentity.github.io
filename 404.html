@@ -16,12 +16,10 @@
     </style>
   </head>
   <body>
-    <br><center><h1>404 Page Not Found</h1><p id="link">The Requested Page Was Not Found</p></center><br><div id="recommendations">Loading recommendations...</div>
+    <br><center><h1>404 Page Not Found</h1><p id="link">The Requested Page Was Not Found</p></center><br><div id="recommendations"> </div>
     <script>
-      function onLoad(){document.getElementById('link').innerText='"'+window.location.hostname+window.location.pathname+'" Was Not Found'}
-      window.onload=onLoad;
-
   (function () {
+    document.getElementById('link').innerText='"'+window.location.hostname+window.location.pathname+'" Was Not Found'
     const TOP_N = 5;
     const pages = [
       ["/index.html", "Home"],
