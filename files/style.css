@@ -32,6 +32,7 @@ a:hover, a:active {
   color: inherit;
   cursor:pointer;
   filter: brightness(85%);
+  text-decoration: underline;
 }
 input, textarea {
   font-family: inherit;
