@@ -69,3 +69,4 @@ select:hover{
 details > summary{
   cursor:pointer;
 }
+iframe{border:none;}
