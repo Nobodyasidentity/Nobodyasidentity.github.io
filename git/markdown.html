@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Viewer</title>
+
+  <!-- GitHub-style markdown formatting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      background: #f6f8fa;
+      margin: 0;
+      padding: 0;
+    }
+    .markdown-body {
+      max-width: 900px;
+      padding: 2rem;
+      background: white;
+      margin-top: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <article id="content" class="markdown-body">
+    Loading…
+  </article>
+
+  <!-- Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    const README_URL = "https://raw.githubusercontent.com/Nobodyasidentity/otypes/refs/heads/main/README.md";
+
+    async function loadMarkdown(url) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch markdown");
+        const text = await res.text();
+        document.getElementById("content").innerHTML = marked.parse(text);
+      } catch (err) {
+        document.getElementById("content").innerHTML = "<p style='color:red;'>Error loading markdown.</p>";
+        console.error(err);
+      }
+    }
+
+    loadMarkdown(README_URL);
+  </script>
+
+</body>
+</html>
