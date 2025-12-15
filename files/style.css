@@ -25,7 +25,7 @@ button:active{
 }
 a{font-family:inherit;font-size:inherit;}
 a:link, a:visited {
-  color: inherit;
+  color:#4a6cf7;
   text-decoration: none;
 }
 a:hover, a:active {
@@ -70,3 +70,40 @@ details > summary{
   cursor:pointer;
 }
 iframe{border:none;}
+/*CUSTOM OBJECTS  (remove or rename if browser adds in the future)*/
+hover{
+  position:relative;
+  display:inline-block;
+  color:red;
+}
+hover::after{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:calc(100%+12px);
+  pointer-events:none;
+}
+hover>onhover {
+  position:absolute;
+  top:1.1em;
+  left:0;
+  z-index:1000;
+  min-width:220px;
+  max-width:320px;
+  padding:0.75rem;
+  background:light-dark(#dcdcdc,#2c2c2c);
+  color:light-dark(black,white);
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-2px);
+  transition:opacity 0.12s ease,transform 0.12s ease;
+}
+hover:hover>onhover,hover>onhover:hover{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
