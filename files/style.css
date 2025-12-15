@@ -93,6 +93,8 @@ hover>onhover {
   color:light-dark(black,white);
   border-radius:8px;
   box-shadow:0 8px 24px rgba(0,0,0,0.15);
+  display:inline-block;
+  white-space:nowrap;
   opacity:0;
   pointer-events:none;
   transform:translateY(-2px);
