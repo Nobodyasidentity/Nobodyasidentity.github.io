@@ -62,6 +62,8 @@ select{
 select:hover{background-color:light-dark(#dcdcdc,#2c2c2c);}
 details>summary{cursor:pointer;}
 iframe{border:none;}
+img.bg{background:light-dark(white,black);border-radius:5%;}
+img.float{float:left;margin-right:20px;}
 
 /*CUSTOM OBJECTS  (remove or rename if browser adds in the future)*/
 
