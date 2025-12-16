@@ -61,7 +61,7 @@ select{
 }
 select:hover{background-color:light-dark(#dcdcdc,#2c2c2c);}
 details>summary{cursor:pointer;}
-iframe{border:none;}
+iframe{border:none;border-radius:5px;}
 img.bg{background:light-dark(white,black);border-radius:5%;}
 img.float{float:left;margin-right:20px;}
 
