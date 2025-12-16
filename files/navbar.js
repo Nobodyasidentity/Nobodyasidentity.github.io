@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",function(){
   const htmlEl = document.documentElement;
-  const savedTheme = localStorage.getItem('theme')||'light';
+  const savedTheme = localStorage.getItem('theme')||'dark';
   htmlEl.setAttribute('data-theme', savedTheme);
   fetch('/files/navbar.html')
     .then(res => res.text())
