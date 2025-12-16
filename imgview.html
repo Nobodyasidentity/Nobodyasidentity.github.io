@@ -61,12 +61,10 @@
 
 <script src="/files/panzoom.js"></script>
 <script>
-  //const params=new URLSearchParams(window.location.search);
-  //const src = params.get('src');
-  const src=location.hash.slice(1);
+  const src = location.hash.slice(1);
 
-  if(!src){
-    document.body.innerHTML ='<p style="color:white;padding:1rem">No image specified</p>';
+  if (!src) {
+    document.body.innerHTML = '<p style="color:white;padding:1rem">No image specified</p>';
     throw new Error('No image src');
   }
 
@@ -90,16 +88,26 @@
       contain: false
     });
 
-    const startX = (cw - iw * fitScale) / 2;
-    const startY = (ch - ih * fitScale) / 2;
-
     panzoom.zoom(fitScale, { animate: false });
+
+    const scaledWidth = iw * fitScale;
+    const scaledHeight = ih * fitScale;
+
+    let startX = 0;
+    let startY = 0;
+
+    if (scaledWidth < cw) startX = (cw - scaledWidth) / 2;
+    if (scaledHeight < ch) startY = (ch - scaledHeight) / 2;
+
     panzoom.pan(startX, startY, { animate: false });
 
     container.addEventListener('wheel', panzoom.zoomWithWheel);
     document.getElementById('zoomIn').onclick = () => panzoom.zoomIn();
     document.getElementById('zoomOut').onclick = () => panzoom.zoomOut();
-    document.getElementById('reset').onclick = () => {panzoom.zoom(fitScale);panzoom.pan(startX,startY);};
+    document.getElementById('reset').onclick = () => {
+      panzoom.zoom(fitScale);
+      panzoom.pan(startX, startY);
+    };
   };
 </script>
 
