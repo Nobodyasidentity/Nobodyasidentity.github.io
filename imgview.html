@@ -58,12 +58,10 @@
     <button id="reset">Reset</button>
   </div>
 </div>
-
-<script src="/files/panzoom.js"></script>
+  <script src="/files/panzoom.js"></script>
 <script>
   const src = location.hash.slice(1);
-
-  if (!src) {
+  if(!src){
     document.body.innerHTML = '<p style="color:white;padding:1rem">No image specified</p>';
     throw new Error('No image src');
   }
@@ -71,9 +69,7 @@
   const container = document.getElementById('container');
   const panzoomEl = document.getElementById('panzoom');
   const img = document.getElementById('image');
-
   img.src = src;
-
   img.onload = () => {
     const cw = container.clientWidth;
     const ch = container.clientHeight;
@@ -85,7 +81,7 @@
     const panzoom = Panzoom(panzoomEl, {
       maxScale: 100,
       minScale: fitScale,
-      contain: false
+      contain: 'outside'
     });
 
     panzoom.zoom(fitScale, { animate: false });
@@ -93,23 +89,25 @@
     const scaledWidth = iw * fitScale;
     const scaledHeight = ih * fitScale;
 
-    let startX = 0;
-    let startY = 0;
+    let offsetX = 0;
+    let offsetY = 0;
 
-    if (scaledWidth < cw) startX = (cw - scaledWidth) / 2;
-    if (scaledHeight < ch) startY = (ch - scaledHeight) / 2;
+    if (scaledWidth < cw) offsetX = (cw - scaledWidth) / 2;
+    if (scaledHeight < ch) offsetY = (ch - scaledHeight) / 2;
 
-    panzoom.pan(startX, startY, { animate: false });
-
+    panzoom.pan(offsetX, offsetY, { animate: false });
     container.addEventListener('wheel', panzoom.zoomWithWheel);
-    document.getElementById('zoomIn').onclick = () => panzoom.zoomIn();
-    document.getElementById('zoomOut').onclick = () => panzoom.zoomOut();
-    document.getElementById('reset').onclick = () => {
+    const zoomIn = document.getElementById('zoomIn');
+    const zoomOut = document.getElementById('zoomOut');
+    const reset = document.getElementById('reset');
+
+    if (zoomIn) zoomIn.onclick = () => panzoom.zoomIn();
+    if (zoomOut) zoomOut.onclick = () => panzoom.zoomOut();
+    if (reset) reset.onclick = () => {
       panzoom.zoom(fitScale);
-      panzoom.pan(startX, startY);
+      panzoom.pan(offsetX, offsetY);
     };
   };
 </script>
-
 </body>
 </html>
