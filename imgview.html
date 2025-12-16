@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Image Viewer - Nobody</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  html,body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #111;
+  }
+  #container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  #panzoom {
+    width: fit-content;
+    height: fit-content;
+    transform-origin: 0 0;
+  }
+  img {
+    display: block;
+    user-select: none;
+    pointer-events: none;
+  }
+  #ui {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+  }
+  #ui button {
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 6px 10px;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="container">
+  <div id="panzoom">
+    <img id="image" alt="">
+  </div>
+  <div id="ui">
+    <button id="zoomIn">+</button>
+    <button id="zoomOut">−</button>
+    <button id="reset">Reset</button>
+  </div>
+</div>
+
+<script src="/files/panzoom.js"></script>
+<script>
+  const params=new URLSearchParams(window.location.search);
+  const src = params.get('src');
+
+  if(!src){
+    document.body.innerHTML ='<p style="color:white;padding:1rem">No image specified</p>';
+    throw new Error('No image src');
+  }
+
+  const container = document.getElementById('container');
+  const panzoomEl = document.getElementById('panzoom');
+  const img = document.getElementById('image');
+
+  img.src = src;
+
+  img.onload = () => {
+    const cw = container.clientWidth;
+    const ch = container.clientHeight;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+
+    const fitScale = Math.min(cw / iw, ch / ih);
+
+    const panzoom = Panzoom(panzoomEl, {
+      maxScale: 100,
+      minScale: fitScale,
+      contain: false
+    });
+
+    const startX = (cw - iw * fitScale) / 2;
+    const startY = (ch - ih * fitScale) / 2;
+
+    panzoom.zoom(fitScale, { animate: false });
+    panzoom.pan(startX, startY, { animate: false });
+
+    container.addEventListener('wheel', panzoom.zoomWithWheel);
+    document.getElementById('zoomIn').onclick = () => panzoom.zoomIn();
+    document.getElementById('zoomOut').onclick = () => panzoom.zoomOut();
+    document.getElementById('reset').onclick = () => {panzoom.zoom(fitScale);panzoom.pan(startX,startY);};
+  };
+</script>
+
+</body>
+</html>
