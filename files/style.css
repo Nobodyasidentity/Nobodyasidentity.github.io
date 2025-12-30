@@ -165,3 +165,19 @@ onhover.mchover {
 .mc .underline{text-decoration:underline;}
 .mc .italic{font-style:italic;}
 .mc .shadow{text-shadow:3px 3px #3F3F3F;}
+.mcslot {
+  height: 60px;
+  min-width: 60px;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  background: light-dark(#8b8b8b,#555555);
+  border: 2px solid light-dark(#373737,#1a1a1a);
+  box-shadow:
+    inset -2px -2px 0 light-dark(#555555,#777777),
+    inset  2px  2px 0 light-dark(#c6c6c6,#2e2e2e);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: top;
+}
