@@ -104,6 +104,7 @@ hover:hover>onhover,hover>onhover:hover{
   transform:translateY(0);
 }
 onhover.mchover {
+  text-align:left;
   border-radius:0px;
   padding: 6px 8px;
   background-color: #100010;
