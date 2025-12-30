@@ -124,15 +124,15 @@ onhover.mchover {
     0 4px,
     4px 4px,
     4px 0,
-    calc(100%-4px) 0,
-    calc(100%-4px) 4px,
+    calc(100% - 4px) 0,
+    calc(100% - 4px) 4px,
     100% 4px,
-    100% calc(100%-4px),
-    calc(100%-4px) calc(100%-4px),
-    calc(100%-4px) 100%,
+    100% calc(100% - 4px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 4px) 100%,
     4px 100%,
-    4px calc(100%-4px),
-    0 calc(100%-4px)
+    4px calc(100% - 4px),
+    0 calc(100% - 4px)
   );
 }
 /*MINECRAFT FONT*/
