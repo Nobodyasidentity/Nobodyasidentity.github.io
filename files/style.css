@@ -108,7 +108,7 @@ onhover.mchover {
   padding: 6px 8px;
   background-color: #100010;
   border:none;
-  box-shadow:inset 0 0 0 1px #000000,inset 1px 1px 0 1px #373737;
+  box-shadow:none;
   clip-path: polygon(
     0px 4px,
     4px 4px,
