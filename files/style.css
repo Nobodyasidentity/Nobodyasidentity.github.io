@@ -6,7 +6,7 @@ body{
   font-size:16px;
   background-color:light-dark(#d1d1d1,#1d1d1d);
   color:light-dark(black,white);
-  font-family:Courier New,Courier-New,'Courier New',monospace;
+  font-family:"Courier New",Courier-New,'Courier New',monospace;
 }
 P{font-family:inherit;font-size:inherit;}
 button{
