@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/files/style.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="icon" href="/files/icon.png?">
+    <title>Nobody</title>
+  </head>
+  <body>
+    <p>att27:1</p>
+    <textarea onkeyup="md.innerHTML=MD(ta2html(this.value))"></textarea>
+    <div class="md" id="md"></div><script>const md=document.getElementById('md');</script>
+    <script>
+  function ta2html(text){return String(text).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;").replaceAll(" ","&ensp;").replaceAll("\n","<br>");}
+  function MD(text) {
+    return String(text)
+    .replace(/!\[(.*?)\]\((.+?)\)/gm,'<img style="max-width:300px;max-height:300px" src="$2" alt="$1">')
+    .replace(/¡\[(.*?)\]\((.+?)\)/gm,'<iframe style="width:300px;height:300px;resize:both;" src="$2""></iframe>')
+    .replace(/\[(.+?)\]\((.+?)\)/gm,'<a target="_blank" href="$2">$1</a>')
+    .replace(/\*\*(.*?)\*\*/gm,"<b>$1</b>")
+    .replace(/__(.*?)__/gm,"<u>$1</u>")
+    .replace(/_(.*?)_/gm,"<i>$1</i>")
+    .replace(/~~(.*?)~~/gm,"<del>$1</del>")
+    .replace(/\[:(\d+?),(\d+?),(\d+?):(.*?)\]/gm,'<span style="color:rgb($1,$2,$3);">$4</span>')
+    .replace(/\[:(\d+?),(\d+?),(\d+?),([0-9.]+?):(.*?)\]/gm,'<span style="color:rgba($1,$2,$3,$4);">$5</span>')
+    .replace(/\[:(#\w+?):(.*?)\]/gm,'<span style="color:$1;">$2</span>')
+    .replace(/\|\|\|(.*?)(\<br\>)(.*?)(\<br\>)?\|\|\|/gm,"<details><summary>$1</summary>$3</details>")
+    .replace(/\[:mc:(.*?)\]/gm,'<span class="mc">$1</span>')
+    ;}
+  document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".md").forEach(el=>{el.innerHTML=MD(el.innerText);});});
+</script>
+    <script src="/files/navbar.js"></script>
+  </body>
+</html>
