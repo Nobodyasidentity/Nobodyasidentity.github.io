@@ -8,6 +8,14 @@ body{
   color:light-dark(black,white);
   font-family:"Courier New",Courier-New,'Courier New',monospace;
 }
+body.bgimg{
+  background-image:url("/files/bg.jpg");
+  background-color:black;
+  height:100vh;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
 P{font-family:inherit;font-size:inherit;}
 button{
   font-family:inherit;
