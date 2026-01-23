@@ -73,6 +73,9 @@ details>summary{cursor:pointer;}
 iframe{border:none;border-radius:5px;}
 img.bg{background:light-dark(white,black);border-radius:5%;}
 img.float{float:left;margin-right:20px;}
+h1,h2,h3,h4,h5,h6{
+  font-size:2em;
+}
 
 /*CUSTOM OBJECTS  (remove or rename if browser adds in the future)*/
 
