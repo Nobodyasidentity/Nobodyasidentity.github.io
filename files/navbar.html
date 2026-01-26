@@ -137,4 +137,19 @@ html, body {
   }
 }
 </style>
-<script>document.addEventListener('click',e=>{const clicked=e.target.closest('click');if(!clicked){document.querySelectorAll('click[open]').forEach(el=>el.removeAttribute('open'));return;}clicked.toggleAttribute('open');});</script>
+<script>
+document.addEventListener('click', e => {
+  const clicked = e.target.closest('click');
+
+  // close only clicks that are NOT ancestors of the clicked one
+  document.querySelectorAll('click[open]').forEach(el => {
+    if (!clicked || !el.contains(clicked)) {
+      el.removeAttribute('open');
+    }
+  });
+
+  if (!clicked) return;
+
+  clicked.toggleAttribute('open');
+});
+</script>
