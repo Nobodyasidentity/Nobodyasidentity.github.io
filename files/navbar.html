@@ -137,3 +137,18 @@ html, body {
   }
 }
 </style>
+<script>
+document.addEventListener('click', e => {
+  const clicked = e.target.closest('click');
+
+  // close all if clicking outside
+  if (!clicked) {
+    document.querySelectorAll('click[open]')
+      .forEach(el => el.removeAttribute('open'));
+    return;
+  }
+
+  // toggle clicked one
+  clicked.toggleAttribute('open');
+});
+</script>
