@@ -137,9 +137,4 @@ html, body {
   }
 }
 </style>
-<script>
-document.addEventListener('click',e=>{
-  const clicked=e.target.closest('click');
-  if(!clicked){document.querySelectorAll('click[open]').forEach(el=>el.removeAttribute('open'));return;}
-  clicked.toggleAttribute('open');});
-</script>
+<script>document.addEventListener('click',e=>{const clicked=e.target.closest('click');if(!clicked){document.querySelectorAll('click[open]').forEach(el=>el.removeAttribute('open'));return;}clicked.toggleAttribute('open');});</script>
