@@ -146,7 +146,8 @@ button:active {
 }
 
 /* ── Inputs & Textareas ─────────────────────────────────────── */
-input, textarea {
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+textarea {
   font-family:      var(--font-mono);
   font-size:        inherit;
   background-color: var(--bg-input);
@@ -158,12 +159,23 @@ input, textarea {
   transition:       border-color var(--transition), box-shadow var(--transition);
   width:            100%;
 }
-input:focus, textarea:focus {
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+textarea:focus {
   border-color: var(--border-focus);
   box-shadow:   0 0 0 3px var(--red-glow);
 }
 textarea { resize: both; cursor: auto; }
 
+/* Checkboxes & radios — keep native sizing, just tint the accent */
+input[type="checkbox"],
+input[type="radio"] {
+  width:          auto;
+  padding:        0;
+  margin:         0;
+  vertical-align: middle;
+  accent-color:   var(--red);
+  cursor:         pointer;
+}
 /* ── Select ─────────────────────────────────────────────────── */
 select {
   font-family:      var(--font-mono);
@@ -203,7 +215,6 @@ select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px va
   color:            #e8e8e8;
   tab-size:         2;
 }
-
 /* ── Details / Summary ──────────────────────────────────────── */
 details {
   background:    var(--bg-2);
@@ -233,8 +244,6 @@ details > summary::before {
   flex-shrink: 0;
 }
 details[open] > summary::before { transform: rotate(90deg); }
-
-/* The animated wrapper div */
 details > div {
   display: grid;
   grid-template-rows: 0fr;
@@ -245,11 +254,9 @@ details[open] > div {
   grid-template-rows: 1fr;
 }
 details > div > * {
-  /* inner content needs min-height: 0 to collapse properly */
   min-height: 0;
   padding-bottom: 0.6em;
 }
-
 /* ── iframe ─────────────────────────────────────────────────── */
 iframe {
   border:        none;
@@ -301,47 +308,60 @@ blockquote {
 
 /* ── <hover> tooltip ────────────────────────────────────────── */
 hover {
-  position:    relative;
-  display:     inline-block;
-  color:       var(--red);
-  cursor:      help;
+  position:      relative;
+  display:       inline-block;
+  color:         var(--red);
+  cursor:        help;
   border-bottom: 1px dashed var(--red);
-  transition: border-color var(--transition);
+  transition:    border-color var(--transition);
+  isolation:     isolate;
 }
 hover::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -4px;
-  width: calc(100% + 8px);
-  height: calc(100% + 14px);
+  content:        '';
+  position:       absolute;
+  top:            100%;
+  left:           -4px;
+  width:          calc(100% + 8px);
+  height:         10px;
+  pointer-events: none;
+}
+hover:hover::after {
   pointer-events: auto;
 }
+
 hover > onhover {
-  position:   absolute;
-  top:        calc(100% + 6px);
-  left:       0;
-  z-index:    1000;
-  padding:    0.6rem 0.85rem;
-  background: var(--bg-3);
-  color:      var(--fg);
-  border:     1px solid var(--border);
+  position:      absolute;
+  top:           calc(100% + 6px);
+  left:          0;
+  z-index:       2147483647;
+  padding:       0.6rem 0.85rem;
+  background:    var(--bg-3);
+  color:         var(--fg);
+  border:        1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  display:    inline-block;
-  white-space: nowrap;
-  font-size:  0.92em;
-  opacity:    0;
+  box-shadow:    var(--shadow-md);
+  display:       inline-block;
+  white-space:   nowrap;
+  font-size:     0.92em;
+  width:         0;
+  height:        0;
+  padding:       0;
+  overflow:      hidden;
+  opacity:       0;
   pointer-events: none;
-  transform:  translateY(-4px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform:     translateY(-4px);
+  transition:    opacity 0.15s ease, transform 0.15s ease;
 }
 hover:hover > onhover,
 hover > onhover:hover {
+  width:          auto;
+  height:         auto;
+  padding:        0.6rem 0.85rem;
+  overflow:       visible;
   opacity:        1;
   pointer-events: auto;
   transform:      translateY(0);
 }
-
 /* Minecraft-style tooltip variant */
 onhover.mchover {
   text-align:      left;
