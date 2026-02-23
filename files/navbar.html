@@ -10,15 +10,19 @@
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
     <li>
-      <hover>
-        Branches
-        <onhover>
-          <hover>HTML<onhover><a href="/html/v0">V0</a></onhover></hover><br>
-          <hover>Minecraft > Guide<onhover>
-            <a href="/mc/guide/enchants">Enchantments</a>
-          </onhover></hover><br>
-        </onhover>
-      </hover>
+      <details>
+        <summary>Branches</summary>
+        <div>
+          <details>
+            <summary>HTML</summary>
+            <div><a href="/html/v0">V0</a></div>
+          </details>
+          <details>
+            <summary>Minecraft &gt; Guide</summary>
+            <div><a href="/mc/guide/enchants">Enchantments</a></div>
+          </details>
+        </div>
+      </details>
     </li>
     <li><button id="theme-toggle" class="theme-btn">🌙</button></li>
   </ul>
