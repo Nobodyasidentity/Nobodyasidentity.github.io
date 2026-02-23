@@ -12,16 +12,16 @@
     <li>
       <details>
         <summary>Branches</summary>
-        <div>
+        <div><div>
           <details>
             <summary>HTML</summary>
-            <div><a href="/html/v0">V0</a></div>
+            <div><div><a href="/html/v0">V0</a></div></div>
           </details>
           <details>
             <summary>Minecraft &gt; Guide</summary>
-            <div><a href="/mc/guide/enchants">Enchantments</a></div>
+            <div><div><a href="/mc/guide/enchants">Enchantments</a></div></div>
           </details>
-        </div>
+        </div></div>
       </details>
     </li>
     <li><button id="theme-toggle" class="theme-btn">🌙</button></li>
@@ -48,7 +48,7 @@ html, body {
   --nav-bg: rgba(30,30,30,0.5);
   --nav-text: #fff;
 }
-  .navbar,
+.navbar,
 .nav-links,
 .nav-links li {
   overflow: visible;
@@ -62,10 +62,10 @@ html, body {
   align-items: center;
   justify-content: space-between;
 
-  padding:10px 20px;
-  background:var(--nav-bg);
-  -webkit-backdrop-filter:blur(4px);
-  backdrop-filter:blur(4px);
+  padding: 10px 20px;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 .logo {
   color: var(--nav-text);
@@ -88,6 +88,79 @@ html, body {
   cursor: pointer;
   text-decoration: none;
 }
+
+/* Nav-specific details/summary — floats below navbar, doesn't affect layout */
+.nav-links details {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+.nav-links details[open] {
+  box-shadow: none;
+  border-color: transparent;
+}
+.nav-links details > summary {
+  color: var(--nav-text);
+  font-weight: normal;
+  padding: 0;
+  display: inline;
+  list-style: none;
+}
+.nav-links details > summary::before,
+.nav-links details > summary::-webkit-details-marker {
+  display: none;
+}
+/* Outer div: absolutely positioned float below the summary */
+.nav-links details > div {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 2000;
+  min-width: 140px;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 6px;
+  overflow: hidden;
+  /* grid animation on the outer div itself */
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.nav-links details[open] > div {
+  grid-template-rows: 1fr;
+}
+/* Inner wrapper needed for 0fr collapse */
+.nav-links details > div > * {
+  min-height: 0;
+  padding: 4px 8px;
+}
+.nav-links details > div a,
+.nav-links details > div summary {
+  display: block;
+  padding: 4px 0;
+  color: var(--nav-text);
+  white-space: nowrap;
+}
+/* Nested details inside the dropdown */
+.nav-links details details {
+  display: block;
+  position: static;
+}
+.nav-links details details > div {
+  position: static;
+  background: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
+  padding-left: 10px;
+}
+
 #menu-toggle {
   display: none;
 }
@@ -99,11 +172,9 @@ html, body {
   user-select: none;
 }
 @media (max-width: 768px) {
-
   .menu-icon {
     display: block;
   }
-
   .nav-links {
     position: fixed;
     top: 56px;
@@ -150,19 +221,3 @@ html, body {
   }
 }
 </style>
-<script>
-document.addEventListener('click', e => {
-  const clicked = e.target.closest('click');
-
-  // close only clicks that are NOT ancestors of the clicked one
-  document.querySelectorAll('click[open]').forEach(el => {
-    if (!clicked || !el.contains(clicked)) {
-      el.removeAttribute('open');
-    }
-  });
-
-  if (!clicked) return;
-
-  clicked.toggleAttribute('open');
-});
-</script>
