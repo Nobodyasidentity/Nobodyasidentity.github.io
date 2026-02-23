@@ -214,6 +214,7 @@ select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px va
   color:            #e8e8e8;
   tab-size:         2;
 }
+pre{display:inline-block;}
 /* ── Details / Summary ──────────────────────────────────────── */
 details {
   background:    var(--bg-2);
@@ -300,7 +301,7 @@ blockquote {
   background:   var(--bg-2);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
-
+.greentext{color:green;}
 /* ============================================================
    CUSTOM ELEMENTS
    ============================================================ */
