@@ -1,23 +1,19 @@
 (function(){
-  const GAP=6;
+  const GAP=6,shown=new Set();
+  function isDescOf(t,anc){let p=t._par;while(p){if(p===anc)return true;p=p._par;}return false;}
+  function hasShownDesc(tip){for(const t of shown)if(isDescOf(t,tip))return true;return false;}
   function setup(el){
-    if(el._hoverInit)return;
-    el._hoverInit=true;
+    if(el._hi)return;
+    el._hi=true;
     const tip=el.querySelector(':scope > onhover');
     if(!tip)return;
-    const parentTip=el.closest('onhover');
+    tip._par=el.closest('onhover');
     el.removeChild(tip);
     document.body.appendChild(tip);
-    tip._parent=parentTip;
-    let timer=null,inside=false;
-    tip._cancelHide=()=>clearTimeout(timer);
-    function ancestors(){
-      let a=parentTip;
-      while(a){a._cancelHide&&a._cancelHide();a=a._parent;}
-    }
+    let timer=null;
     function show(){
       clearTimeout(timer);
-      ancestors();
+      shown.add(tip);
       document.body.appendChild(tip);
       tip.style.visibility='hidden';
       tip.style.display='inline-block';
@@ -30,15 +26,17 @@
       tip.style.left=Math.max(4,Math.min(left,vw-t.width -4))+'px';
       requestAnimationFrame(()=>{tip.style.visibility='';tip.classList.add('visible');});
     }
-    function hide(){
-      clearTimeout(timer);
+    function tryHide(){
+      if(hasShownDesc(tip))return;
+      shown.delete(tip);
       tip.classList.remove('visible');
       setTimeout(()=>{if(!tip.classList.contains('visible'))tip.style.display='';},150);
     }
+    function sched(){clearTimeout(timer);timer=setTimeout(tryHide,80);}
     el.addEventListener('mouseenter',show);
-    el.addEventListener('mouseleave',()=>{timer=setTimeout(()=>{if(!inside)hide();},80);});
-    tip.addEventListener('mouseenter',()=>{inside=true;clearTimeout(timer);ancestors();});
-    tip.addEventListener('mouseleave',()=>{inside=false;hide();});
+    el.addEventListener('mouseleave',sched);
+    tip.addEventListener('mouseenter',()=>clearTimeout(timer));
+    tip.addEventListener('mouseleave',sched);
   }
   function init(){
     document.querySelectorAll('hover').forEach(setup);
