@@ -208,7 +208,6 @@ select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px va
   font-family:      var(--font-code);
   font-size:        0.9em;
   padding:          1em 1.2em;
-  overflow-x:       auto;
   box-shadow:       var(--shadow-md);
   line-height:      1.55;
   color:            #e8e8e8;
