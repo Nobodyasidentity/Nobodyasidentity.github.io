@@ -1,7 +1,7 @@
 (function(){
   const GAP=6,shown=new Set();
-  function isDescOf(t,anc){let p=t._par;while(p){if(p===anc)return true;p=p._par;}return false;}
-  function hasShownDesc(tip){for(const t of shown)if(isDescOf(t,tip))return true;return false;}
+  function ancestors(tip){const a=[];let p=tip._par;while(p){a.push(p);p=p._par;}return a;}
+  function hasShownDesc(tip){for(const t of shown)if(ancestors(t).includes(tip))return true;return false;}
   function setup(el){
     if(el._hi)return;
     el._hi=true;
@@ -31,8 +31,10 @@
       shown.delete(tip);
       tip.classList.remove('visible');
       setTimeout(()=>{if(!tip.classList.contains('visible'))tip.style.display='';},150);
+      ancestors(tip).forEach(a=>a._sched&&a._sched());
     }
     function sched(){clearTimeout(timer);timer=setTimeout(tryHide,80);}
+    tip._sched=sched;
     el.addEventListener('mouseenter',show);
     el.addEventListener('mouseleave',sched);
     tip.addEventListener('mouseenter',()=>clearTimeout(timer));
