@@ -94,6 +94,8 @@ h6 { font-size: 1em;   color: var(--fg-dim); }
 
 p  { margin: 0.75em 0; }
 
+sub{ font-size: small; }
+sup{ font-size: small; }
 /* ── Links ──────────────────────────────────────────────────── */
 a:link, a:visited {
   color:           var(--red);
