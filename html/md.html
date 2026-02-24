@@ -77,8 +77,9 @@
       }
       function Emojis4MD(text,emojilist){
         for(var emoji in emojilist.keys()){
-          text=Regex4MDLink(text,`:${emoji}:`,emojilist[emoji])
+          text=Regex4MDLink(text,`:${emoji}:`,emojilist[emoji]);
         }
+        return text
       }
 function md(text){
   const escaped=[];
