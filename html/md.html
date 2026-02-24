@@ -2,7 +2,10 @@
 <html>
   <head><script defer src="/main.js"></script><title>Nobody</title></head>
   <body>
-    <style>.greentext{color:green;}</style>
+    <style>
+      .greentext{color:green;}
+      .mdfooter{color:var(--fg-dim);}
+    </style>
     <p>att4v45?</p>
     <textarea id="raw" oninput="code.innerText=md(textarea2HTML(raw.value));result.innerHTML=code.innerText;"></textarea>
     <div id="result"></div>
