@@ -97,6 +97,9 @@ function md(text){
   text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))\[([^\]\`]+)\]\(([^)]+)\)/gs,(match,linkText,url)=>{return `<a target="_blank" href="${sanitizeURL4MD(url)}">${linkText}</a>`;});
   
   text=Regex4MD(text,"&lt;center&gt;","&lt;/center&gt;","<center>$1</center>");
+  text=Regex4MD(text,"&lt;sub&gt;","&lt;/sub&gt;","<sub>$1</sub>");
+  text=Regex4MD(text,"&lt;sup&gt;","&lt;/sup&gt;","<sup>$1</sup>");
+  
   text=Regex4MD(text,"__","__","<u>$1</u>");
   text=Regex4MD(text,"**","**","<b>$1</b>");
   text=Regex4MD(text,"^^","^^","<i>$1</i>");
