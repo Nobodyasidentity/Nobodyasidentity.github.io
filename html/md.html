@@ -75,12 +75,21 @@
           .replaceAll('"','%22')
           .replaceAll("'","%27");
       }
+      function Emojis4MD(text,emojilist){
+        for(var emoji in emojilist.keys()){
+          text=Regex4MDLink(text,`:${emoji}:`,emojilist[emoji])
+        }
+      }
 function md(text){
   const escaped=[];
   text=text.replace(/\\(.)/gs,(match,char)=>{const index=escaped.length;escaped.push(char);return`\x00${index}\x00`;});
   const codeblocks=[];
   text=text.replace(/``/gs,"`\n`").replaceAll("&lt;br&gt;","<br>");
   text=text.replace(/`([^`]+)`/gs,(match,code)=>{const index=codeblocks.length;codeblocks.push(`<pre class='codeblock'>${HTMLProof(code)}</pre>`);return`\x01${index}\x01`;});
+  
+  text=Emojis4MD(text,{
+    pi:"π"
+  })
   
   text=Regex4MDLink(text,"\n","<br>")
   text=Regex4MDLink(text,"(^|<br>)(>|&gt;)(.+?)($|<br>)",'$1<span class="greentext">$2$3</span>$4');
