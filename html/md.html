@@ -90,7 +90,7 @@ function md(text){
   text=Regex4MDLink(text,"(^|<br>)(#### |####&ensp;)(.+?)($|<br>)",'$1<h4>$3</h4>$4');
   text=Regex4MDLink(text,"(^|<br>)(##### |#####&ensp;)(.+?)($|<br>)",'$1<h5>$3</h5>$4');
   text=Regex4MDLink(text,"(^|<br>)(###### |######&ensp;)(.+?)($|<br>)",'$1<h6>$3</h6>$4');
-  text=Regex4MDLink(text,"(^|<br>)(-# |-#&ensp;)(.+?)($|<br>)",'$1<sub class="footer">$3</sub>$4');
+  text=Regex4MDLink(text,"(^|<br>)(-# |-#&ensp;)(.+?)($|<br>)",'$1<sub class="mdfooter">$3</sub>$4');
   text=Regex4MDLink(text,"(^|<br>)(-){3,}($|<br>)","<hr>$3");
   
   text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))!\[([^\]\x01]*)\]\(([^)]+)\)/gs,(match,alt,url)=>{return `<img src="${sanitizeURL4MD(url)}" alt="${textarea2HTML(alt)}">`;});
