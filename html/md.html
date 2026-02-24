@@ -90,9 +90,9 @@ function md(text){
   
   text=Emojis4MD(text,{
     pi:"π"
-  })
+  });
   
-  text=Regex4MDLink(text,"\n","<br>")
+  text=Regex4MDLink(text,"\n","<br>");
   text=Regex4MDLink(text,"(^|<br>)(>|&gt;)(.+?)($|<br>)",'$1<span class="greentext">$2$3</span>$4');
   text=Regex4MDLink(text,"(^|<br>)(# |#&ensp;)(.+?)($|<br>)",'$1<h1>$3</h1><hr>$4');
   text=Regex4MDLink(text,"(^|<br>)(## |##&ensp;)(.+?)($|<br>)",'$1<h2>$3</h2><hr>$4');
