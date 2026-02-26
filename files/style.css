@@ -296,7 +296,7 @@ hr {
 /* ── Blockquote ─────────────────────────────────────────────── */
 blockquote {
   border-left:  3px solid var(--red);
-  margin-left:  0;
+  margin:       0;
   padding:      0.5em 1em;
   color:        var(--fg-dim);
   background:   var(--bg-2);
