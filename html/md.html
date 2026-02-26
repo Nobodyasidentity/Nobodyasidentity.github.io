@@ -85,6 +85,7 @@ function md(text){
   text=Regex4MDLink(text,":pi:","π");// TODO: make easy emoji system
   
   text=Regex4MDLink(text,"\n","<br>");
+  text=Regex4MDLink(text,"(^|<br>)(> |&gt;&ensp;)(.+?)($|<br>)",'$1<blockquote>$3</blockquote>$4');
   text=Regex4MDLink(text,"(^|<br>)(>|&gt;)(.+?)($|<br>)",'$1<span class="greentext">$2$3</span>$4');
   text=Regex4MDLink(text,"(^|<br>)(# |#&ensp;)(.+?)($|<br>)",'$1<h1>$3</h1><hr>$4');
   text=Regex4MDLink(text,"(^|<br>)(## |##&ensp;)(.+?)($|<br>)",'$1<h2>$3</h2><hr>$4');
@@ -101,6 +102,7 @@ function md(text){
   text=Regex4MD(text,"&lt;center&gt;","&lt;/center&gt;","<center>$1</center>");
   text=Regex4MD(text,"&lt;sub&gt;","&lt;/sub&gt;","<sub>$1</sub>");
   text=Regex4MD(text,"&lt;sup&gt;","&lt;/sup&gt;","<sup>$1</sup>");
+  text=Regex4MD(text,'&lt;blockquote&gt;','&lt;/blockquote&gt;','<blockquote>$1</blockquote>');
   
   text=Regex4MD(text,"__","__","<u>$1</u>");
   text=Regex4MD(text,"**","**","<b>$1</b>");
