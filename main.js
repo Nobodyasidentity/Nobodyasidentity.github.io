@@ -1,5 +1,7 @@
 (function(){
   const htmlEl=document.documentElement;
+  const url=new URL(document.currentScript?.src);
+  const hash=url.hash.slice(1);
   function applyTheme(theme){
     htmlEl.setAttribute('data-theme',theme);
     localStorage.setItem('theme',theme);
@@ -14,9 +16,9 @@
   }
   injectHead('meta',{ charset:'UTF-8'},'meta[charset]');
   injectHead('meta',{ name:'viewport',content:'width=device-width, initial-scale=1.0'},'meta[name="viewport"]');
-  injectHead('link',{ rel:'stylesheet',href:'/files/style.css'},'link[href="/files/style.css"]');
-  injectHead('link',{ rel:'icon',href:'/files/icon.png'},'link[rel="icon"]');
-  loadScript('/files/navbar.js');
+  injectHead('link',{ rel:'stylesheet',href:`${hash}/files/style.css`},`link[href="${hash}/files/style.css"]`);
+  injectHead('link',{ rel:'icon',href:`${hash}/files/icon.png`},'link[rel="icon"]');
+  loadScript(`${hash}/files/navbar.js`);
   function loadScript(src){
     if(document.querySelector(`script[src="${src}"]`))return;
     const s=document.createElement('script');
@@ -25,5 +27,5 @@
   }
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);
   }else{run();}
-  function run(){loadScript('/files/hover.js');}
+  function run(){loadScript(`${hash}/files/hover.js`);}
 })();
