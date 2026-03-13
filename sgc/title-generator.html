@@ -17,7 +17,7 @@
     <input type="text" id="textInput" placeholder="Hello, world…" autocomplete="off" />
 
     <p>Förhandsgranskning</p>
-    <div id="previewBox">
+    <div id="previewBox" class="codeblock">
       <span>Börja skriva för att förhandsgranska</span>
     </div>
 
@@ -47,24 +47,29 @@
     downloadBtn.addEventListener('click', async () => {
       const text = input.value.trim();
       if (!text) return;
-
-      await document.fonts.ready;
  
+      // Explicitly load the exact font variant before drawing
+      await document.fonts.load('700 96px Fraunces');
+ 
+      // Canvas size
       const W = 1200, H = 400;
       canvas.width  = W;
       canvas.height = H;
  
+      // Transparent background
       ctx.clearRect(0, 0, W, H);
  
-      const fontSize = 96;
-      ctx.font = `700 ${fontSize}px 'Fraunces'`;
+      // Match .sgc-h1 exactly
+      ctx.font = '700 96px Fraunces';
       ctx.fillStyle = '#1a1208';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(text, W / 2, H / 2);
  
+      // Use the input text as the filename
+      const safeName = text.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase();
       const link = document.createElement('a');
-      link.download = 'image.png';
+      link.download = `${safeName}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     });
