@@ -8,9 +8,9 @@
   </style>
 </head>
 <body>
-
-  <h1 class="page-title">SGC Titel Generator</h1>
-  <p class="subtitle">Skriv · Förhandsgranska · Ladda ned</p>
+  <center>
+    <h1 class="page-title">SGC Titel Generator</h1>
+    <p class="subtitle">Skriv · Förhandsgranska · Ladda ned</p>
 
   <div>
     <label for="textInput">Text</label>
@@ -23,6 +23,7 @@
 
     <button id="downloadBtn" disabled>↓ Ladda ned PNG</button>
   </div>
+  </center>
   <canvas id="canvas" style="display:none"></canvas>
 
   <script>
@@ -31,7 +32,7 @@
     const downloadBtn = document.getElementById('downloadBtn');
     const canvas      = document.getElementById('canvas');
     const ctx         = canvas.getContext('2d');
-
+ 
     input.addEventListener('input', () => {
       const val = input.value.trim();
       if (val) {
@@ -42,31 +43,32 @@
         downloadBtn.disabled = true;
       }
     });
-
-    downloadBtn.addEventListener('click', () => {
+ 
+    downloadBtn.addEventListener('click', async () => {
       const text = input.value.trim();
       if (!text) return;
 
+      await document.fonts.ready;
+ 
       const W = 1200, H = 400;
       canvas.width  = W;
       canvas.height = H;
-
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, W, H);
-
+ 
+      ctx.clearRect(0, 0, W, H);
+ 
       const fontSize = 96;
-      ctx.font = `700 ${fontSize}px 'Fraunces', Georgia, serif`;
+      ctx.font = `700 ${fontSize}px 'Fraunces'`;
       ctx.fillStyle = '#1a1208';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(text, W / 2, H / 2);
-
+ 
       const link = document.createElement('a');
       link.download = 'image.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
     });
-
+ 
     function escapeHtml(str) {
       return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
