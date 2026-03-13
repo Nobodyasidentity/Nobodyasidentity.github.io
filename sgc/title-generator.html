@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <script defer src="https://nobodyasidentity.github.io/main.js"></script>
   <style>
@@ -9,70 +9,76 @@
 </head>
 <body>
   <center>
-    <h1 class="page-title">SGC Titel Generator</h1>
-    <p class="subtitle">Skriv · Förhandsgranska · Ladda ned</p>
-
-  <div>
-    <label for="textInput">Text</label>
-    <input type="text" id="textInput" placeholder="Hello, world…" autocomplete="off" />
-
-    <p>Förhandsgranskning</p>
-    <div id="previewBox" class="codeblock">
-      <span>Börja skriva för att förhandsgranska</span>
+    <h1>SGC Titel Generator</h1>
+    <p>Genererar en bild med SGCs titel stil</p>
+    <textarea id="input" type="text" placeholder="Type something..." oninput="preview()"></textarea>
+    <p>F&#xf6;rhandsgranskning</p>
+    <div class="codeblock">
+      <h1 class="sgc-h1" id="target"></h1>
     </div>
-
-    <button id="downloadBtn" disabled>↓ Ladda ned PNG</button>
-  </div>
+    <br>
+    <button onclick="download()">Ladda ned PNG</button>
   </center>
-  <canvas id="canvas" style="display:none"></canvas>
 
   <script>
-    const input       = document.getElementById('textInput');
-    const previewBox  = document.getElementById('previewBox');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const renderTarget = document.getElementById('renderTarget');
- 
-    input.addEventListener('input', () => {
-      const val = input.value.trim();
-      if (val) {
-        previewBox.innerHTML = `<h1 class="sgc-h1">${escapeHtml(val)}</h1>`;
-        downloadBtn.disabled = false;
-      } else {
-        previewBox.innerHTML = `<span class="placeholder-text">Start typing to preview</span>`;
-        downloadBtn.disabled = true;
-      }
-    });
- 
-    downloadBtn.addEventListener('click', async () => {
-      const text = input.value.trim();
-      if (!text) return;
- 
-      downloadBtn.disabled = true;
-      downloadBtn.textContent = 'Rendering…';
- 
-      renderTarget.innerHTML = `<h1 class="sgc-h1">${escapeHtml(text)}</h1>`;
- 
-      const canvas = await html2canvas(renderTarget, {
-        backgroundColor: null,
-        scale: 2,
-        useCORS: true,
-        logging: false,
-      });
- 
-      const safeName = text.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase();
-      const link = document.createElement('a');
-      link.download = `${safeName}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
- 
-      renderTarget.innerHTML = '';
-      downloadBtn.disabled = false;
-      downloadBtn.textContent = '↓ Download PNG';
-    });
- 
-    function escapeHtml(str) {
-      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    function preview() {
+      document.getElementById('target').innerText = document.getElementById('input').value;
     }
+
+    async function download() {
+      try {
+        const el = document.getElementById('target');
+        const dataUrl = await htmlToPng(el);
+        const text = el.textContent.trim();
+        const safeName = text.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase();
+        const a = document.createElement('a');
+        a.download = `${safeName}.png`;
+        a.href = dataUrl;
+        a.click();
+      } catch (e) {
+        alert('Error: ' + e.message);
+        console.error(e);
+      }
+    }
+  </script>
+  <script>
+async function htmlToPng(element) {
+  await document.fonts.ready;
+
+  const style = getComputedStyle(element);
+  const scale = 3;
+
+  const font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const color = style.color;
+  const align = style.textAlign === 'center' ? 'center' : (style.textAlign === 'right' ? 'right' : 'left');
+
+  const lines = element.innerText.split('\n');
+
+  const measure = document.createElement('canvas').getContext('2d');
+  measure.font = font;
+
+  const lineMetrics = lines.map(line => measure.measureText(line || ' '));
+  const lineHeight = Math.ceil(lineMetrics[0].actualBoundingBoxAscent + lineMetrics[0].actualBoundingBoxDescent) * 1.4;
+  const width = Math.ceil(Math.max(...lineMetrics.map(m => m.width)));
+  const height = Math.ceil(lineHeight * lines.length);
+
+  const canvas = document.createElement('canvas');
+  canvas.width  = width  * scale;
+  canvas.height = height * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+  ctx.font = font;
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = 'top';
+
+  const x = align === 'center' ? width / 2 : align === 'right' ? width : 0;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, x, i * lineHeight);
+  });
+
+  return canvas.toDataURL('image/png');
+}
   </script>
 </body>
 </html>
