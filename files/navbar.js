@@ -1,9 +1,11 @@
 function initNavbar(){
+  const url=new URL(document.currentScript?.src);
+  const hash=url.hash.slice(1);
   const htmlEl=document.documentElement;
   if(!htmlEl.getAttribute('data-theme')){
     htmlEl.setAttribute('data-theme',localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
   }
-  fetch('/files/navbar.html').then(res=>res.text()).then(data=>{
+  fetch(`${hash}/files/navbar.html`).then(res=>res.text()).then(data=>{
       document.body.insertAdjacentHTML('afterbegin',data);
       const toggleBtn=document.getElementById('theme-toggle');
       function updateIcon(){
@@ -23,5 +25,5 @@ function initNavbar(){
           if(menuToggle.checked)menuToggle.checked=false;
         });
       });
-    }).catch(err=>console.error('[navbar.js] Failed to load /files/navbar.html:',err));}
+    }).catch(err=>console.error(`[navbar.js] Failed to load ${hash}/files/navbar.html:`,err));}
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initNavbar);}else{initNavbar();}
