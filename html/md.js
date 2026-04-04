@@ -86,6 +86,21 @@ function md(text){
     text=Regex4MD(text,"&lt;sub&gt;","&lt;/sub&gt;","<sub>$1</sub>");
     text=Regex4MD(text,"&lt;sup&gt;","&lt;/sup&gt;","<sup>$1</sup>");
     text=Regex4MD(text,'&lt;blockquote&gt;','&lt;/blockquote&gt;','<blockquote>$1</blockquote>');
+
+    // <details> / <details open> with optional <summary>
+    let _detailsPrev;
+    do{
+        _detailsPrev=text;
+        text=text.replace(/&lt;details(\&ensp;open)?&gt;([\s\S]*?)&lt;\/details&gt;/,(match,openAttr,content)=>{
+            const open=openAttr?' open':'';
+            let usedSummary=false;
+            content=content.replace(/&lt;summary&gt;([\s\S]*?)&lt;\/summary&gt;/,(m,inner)=>{
+                if(!usedSummary){usedSummary=true;return`<summary>${inner}</summary>`;}
+                return m;
+            });
+            return`<details${open}>${content}</details>`;
+        });
+    }while(text!==_detailsPrev);
     
     text=Regex4MD(text,"__","__","<u>$1</u>");
     text=Regex4MD(text,"**","**","<b>$1</b>");
