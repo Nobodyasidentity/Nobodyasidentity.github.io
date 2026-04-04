@@ -110,9 +110,12 @@ a:hover, a:active {
   border-color: var(--red);
   cursor:       pointer;
 }
+a[download]::before {
+  content: "📥 ";
+}
 
-/* ── Buttons ────────────────────────────────────────────────── */
-button {
+/* ── (Download-) Buttons ────────────────────────────────────── */
+button, a[download] {
   font-family:      var(--font-mono);
   font-size:        inherit;
   background-color: var(--bg-3);
@@ -128,7 +131,7 @@ button {
   position:         relative;
   overflow:         hidden;
 }
-button::after {
+button::after, a[download]::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -136,13 +139,13 @@ button::after {
   opacity: 0;
   transition: opacity var(--transition);
 }
-button:hover {
+button:hover, a[download]:hover {
   background-color: var(--bg-2);
   border-color:     var(--red);
   box-shadow:       var(--shadow-red);
 }
-button:hover::after { opacity: 1; }
-button:active {
+button:hover::after, a[download]:hover::after { opacity: 1; }
+button:active, a[download]:active {
   transform: scale(0.97);
   background-color: var(--bg-3);
   box-shadow: none;
