@@ -11,108 +11,10 @@
     <div id="result"></div>
     <br><br><br>
     <div class="codeblock" id="code"></div>
-    <script>
+    <script src="/html/md.js">
       const result=document.getElementById('result');
       const raw=document.getElementById('raw');
       const code=document.getElementById('code');
-      function textarea2HTML(text){
-        return String(text)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#39;")
-        .replaceAll(" ","&ensp;")
-        .replaceAll("\n","<br>");
-      }
-      
-      function UNtextarea2HTML(text){
-        return text
-        .replaceAll("<br>","\n")
-        .replaceAll("&lt;","<")
-        .replaceAll("&gt;",">")
-        .replaceAll("&quot;",'"')
-        .replaceAll("&#39;","'")
-        .replaceAll("&ensp;"," ")
-        .replaceAll("&amp;","&");
-      }
-      
-      function HTMLProof(text){
-        text=UNtextarea2HTML(text);
-        text=textarea2HTML(text);
-        return text;
-      }
-      
-      function Regex4MD(text,startDelim,endDelim,replaceto){
-        const escStart=startDelim.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-        const escEnd = endDelim.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-        const regex="(?<!\\\\)(?:(?<=(?<!\\\\)(?:\\\\\\\\)+)|(?<!\\\\))"+escStart+"((?:(?!"+escEnd+").)+)"+escEnd;
-        let OldString=text;
-        let NewString=text.replace(new RegExp(regex,'s'),replaceto);
-        while(NewString!=OldString){
-          OldString=NewString;
-          NewString=NewString.replace(new RegExp(regex,'s'),replaceto);
-        }
-        return NewString;
-      }
-      function Regex4MDLink(text,pattern,replaceto){
-        const regex="(?<!\\\\)(?:(?<=(?<!\\\\)(?:\\\\\\\\)+)|(?<!\\\\))"+pattern;
-        let OldString=text;
-        let NewString=text.replace(new RegExp(regex,'s'),replaceto);
-        while(NewString!=OldString){
-          OldString=NewString;
-          NewString=NewString.replace(new RegExp(regex,'s'),replaceto);
-        }
-        return NewString;
-      }
-      function sanitizeURL4MD(url){
-        url=url.trim();
-        const dangerous=/^(javascript|data|vbscript):/i;
-        if(dangerous.test(url)){
-          return "#";
-        }
-        return encodeURI(url)
-          .replaceAll('"','%22')
-          .replaceAll("'","%27");
-      }
-function md(text){
-  const escaped=[];
-  text=text.replace(/\\(.)/gs,(match,char)=>{const index=escaped.length;escaped.push(char);return`\x00${index}\x00`;});
-  const codeblocks=[];
-  text=text.replace(/``/gs,"`\n`").replaceAll("&lt;br&gt;","<br>");
-  text=text.replace(/`([^`]+)`/gs,(match,code)=>{const index=codeblocks.length;codeblocks.push(`<pre class='codeblock'>${HTMLProof(code)}</pre>`);return`\x01${index}\x01`;});
-  
-  text=Regex4MDLink(text,":pi:","π");// TODO: make easy emoji system
-  
-  text=Regex4MDLink(text,"\n","<br>");
-  text=Regex4MDLink(text,"(^|<br>)(> |&gt;&ensp;)(.+?)($|<br>)",'$1<blockquote>$3</blockquote>$4');
-  text=Regex4MDLink(text,"(^|<br>)(>|&gt;)(.+?)($|<br>)",'$1<span class="greentext">$2$3</span>$4');
-  text=Regex4MDLink(text,"(^|<br>)(# |#&ensp;)(.+?)($|<br>)",'$1<h1>$3</h1><hr>$4');
-  text=Regex4MDLink(text,"(^|<br>)(## |##&ensp;)(.+?)($|<br>)",'$1<h2>$3</h2><hr>$4');
-  text=Regex4MDLink(text,"(^|<br>)(### |###&ensp;)(.+?)($|<br>)",'$1<h3>$3</h3>$4');
-  text=Regex4MDLink(text,"(^|<br>)(#### |####&ensp;)(.+?)($|<br>)",'$1<h4>$3</h4>$4');
-  text=Regex4MDLink(text,"(^|<br>)(##### |#####&ensp;)(.+?)($|<br>)",'$1<h5>$3</h5>$4');
-  text=Regex4MDLink(text,"(^|<br>)(###### |######&ensp;)(.+?)($|<br>)",'$1<h6>$3</h6>$4');
-  text=Regex4MDLink(text,"(^|<br>)(-# |-#&ensp;)(.+?)($|<br>)",'$1<sub class="mdfooter">$3</sub>$4');
-  text=Regex4MDLink(text,"(^|<br>)(-){3,}($|<br>)","<hr>$3");
-  
-  text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))!\[([^\]\x01]*)\]\(([^)]+)\)/gs,(match,alt,url)=>{return `<img src="${sanitizeURL4MD(url)}" alt="${textarea2HTML(alt)}">`;});
-  text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))\[([^\]\`]+)\]\(([^)]+)\)/gs,(match,linkText,url)=>{return `<a target="_blank" href="${sanitizeURL4MD(url)}">${linkText}</a>`;});
-  
-  text=Regex4MD(text,"&lt;center&gt;","&lt;/center&gt;","<center>$1</center>");
-  text=Regex4MD(text,"&lt;sub&gt;","&lt;/sub&gt;","<sub>$1</sub>");
-  text=Regex4MD(text,"&lt;sup&gt;","&lt;/sup&gt;","<sup>$1</sup>");
-  text=Regex4MD(text,'&lt;blockquote&gt;','&lt;/blockquote&gt;','<blockquote>$1</blockquote>');
-  
-  text=Regex4MD(text,"__","__","<u>$1</u>");
-  text=Regex4MD(text,"**","**","<b>$1</b>");
-  text=Regex4MD(text,"^^","^^","<i>$1</i>");
-  text=Regex4MD(text,"~~","~~","<del>$1</del>");
-  
-  text=text.replace(/\x01(\d+)\x01/g,(match,index)=>{return codeblocks[parseInt(index)];});
-  text=text.replace(/\x00(\d+)\x00/g,(match,index)=>{return escaped[parseInt(index)];});
-  return text;
-}
     </script>
   </body>
 </html>
