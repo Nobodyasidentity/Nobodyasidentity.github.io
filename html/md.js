@@ -81,6 +81,7 @@ function md(text){
     
     text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))!\[([^\]\x01]*)\]\(([^)]+)\)/gs,(match,alt,url)=>{return `<img src="${sanitizeURL4MD(url)}" alt="${textarea2HTML(alt)}">`;});
     text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))\[([^\]\`]+)\]\(([^)]+)\)/gs,(match,linkText,url)=>{return `<a target="_blank" href="${sanitizeURL4MD(url)}">${linkText}</a>`;});
+    text=text.replace(/(?<!\\)(?:(?<=(?<!\\)(?:\\\\)+)|(?<!\\))\+\[([^\]\x01]*)\]\(([^)]+)\)/gs,(match,linkText,url)=>{return `<a target="_blank" href="${sanitizeURL4MD(url)}" download>${linkText}</a>`;});
     
     text=Regex4MD(text,"&lt;center&gt;","&lt;/center&gt;","<center>$1</center>");
     text=Regex4MD(text,"&lt;sub&gt;","&lt;/sub&gt;","<sub>$1</sub>");
