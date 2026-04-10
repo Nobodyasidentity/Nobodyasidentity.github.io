@@ -5,6 +5,16 @@
   --red-glow:   rgba(224, 48, 48, 0.18);
   --red-sel:    rgba(224, 48, 48, 0.35);
 
+  --green:      #47e030;
+  --green-dim:  #1c9b1e;
+  --green-glow: rgba(69, 224, 48, 0.18);
+  --green-sel:  rgba(69, 224, 48, 0.35);
+
+  --blue:       #3079e0;
+  --blue-dim:   #1c559b;
+  --blue-glow:  rgba(48, 115, 224, 0.18);
+  --blue-sel:   rgba(48, 115, 224, 0.35);
+
   --bg:         light-dark(#e8e8e8, #141414);
   --bg-2:       light-dark(#d8d8d8, #1e1e1e);
   --bg-3:       light-dark(#cacaca, #2a2a2a);
