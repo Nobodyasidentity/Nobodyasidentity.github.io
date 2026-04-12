@@ -40,6 +40,7 @@
 
   --font-mono:  courier, "Courier New", monospace;
   --font-code:  fira, "Fira Code", "Cascadia Code", monospace;
+  --font-mc:    seven, unifont, unifont_smp_upper, monospace;
 }
 
 [data-theme="light"] { color-scheme: light; }
@@ -54,6 +55,7 @@
 @font-face {font-family:fira;src:url(/files/fonts/fira.ttf);}
 @font-face{font-family:seven;src:url(/files/fonts/seven.ttf);}
 @font-face{font-family:unifont;src:url(/files/fonts/unifont-16.0.04.ttf);}
+@font-face{font-family:unifont_smp_upper;src:url(/files/fonts/unifont-SMP-Upper-16.0.04.ttf);}
 
 /* ── Reset / base ───────────────────────────────────────────── */
 *, *::before, *::after {
@@ -388,7 +390,7 @@ onhover.mchover {
 /* ============================================================
    MINECRAFT STYLES
    ============================================================ */
-.mc { font-family: seven, unifont, monospace; }
+.mc { font-family: var(--font-mc) }
 
 .mc .black        { color: #000000; }
 .mc .black.shadow { text-shadow: 3px 3px #000000; }
