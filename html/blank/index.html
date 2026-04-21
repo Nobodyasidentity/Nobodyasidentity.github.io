@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script defer src="/main.js"></script>
+    <title>Blank V2 - Nobody</title>
+  </head>
+  <body>
+    <center>
+      <h1>Hidden website</h1>
+      <p style="color:red;">Experimental!</p>
+      <p>
+        This tool will disguise any webpage using an iframe.<br>
+        The webpage will appear as <a href="https://mail.google.com/mail/u/0/" target="_blank">Gmail</a> in the search history.<br>
+        ⚠ NOTE: This only works with webpages that allow embedding with iframes. please also allow popups when asked.
+      </p>
+      <p>
+        <span id="span"></span>
+        <input id="url" style="width:fit-content">
+        <button onclick="copy2clipboard();">📋 Copy</button>
+        <span id="copied" style="color:var(--green);"></span>
+      </p>
+    </center>
+    <script>
+      const url=document.getElementById('url');
+      const span=document.getElementById('span');
+      const copied=document.getElementById('copied');
+      (()=>{span.innerText=`${window.location}redirect#`})();
+      url.select();
+      url.setSelectionRange(0,1e+305);
+      function copy2clipboard(){
+        navigator.clipboard.writeText(`${span.innerText}${url.value}`);
+        copied.innerText="✓ Copied!";
+        setTimeout(()=>{
+          copied.innerText="";
+        },2000);
+      }
+    </script>
+  </body>
+</html>
