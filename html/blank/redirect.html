@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=https://mail.google.com/mail/u/0/" />
+  </head>
+  <body>
+    <script>
+      const src=location.hash.slice(1);
+      (()=>{if(!src){window.close();}else{
+          // New about:blank window
+          var win=window.open();
+          win.document.body.style.margin=0;
+          // Body
+          var iframe=win.document.createElement("iframe");
+          iframe.setAttribute("src",src);
+          iframe.style.display="block";
+          iframe.style.height="100vh";
+          iframe.style.width="100vw";
+          iframe.style.border="none";
+          iframe.style.background="black";
+          win.document.body.appendChild(iframe);
+          // Tab settings
+          win.document.title="ㅤㅤ";
+          var icon=win.document.createElement("link");
+          icon.setAttribute("rel","icon");
+          icon.setAttribute("type","icon/png");
+          icon.setAttribute("href","data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAAKSURBVHicY2QAAAAEAAIhZK1qAAAAAElFTkSuQmCC");
+          win.document.head.appendChild(icon);
+        }})();
+    </script>
+  </body>
+</html>
