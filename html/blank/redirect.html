@@ -10,7 +10,7 @@
       (()=>{if(!src){window.close();}else{
           // New about:blank window
           var win=window.open();
-          win.document.body.style.margin=0;
+          win.document.getElementsByTagName('body')[0].style.margin=0;
           // Body
           var iframe=win.document.createElement("iframe");
           iframe.setAttribute("src",src);
@@ -19,14 +19,14 @@
           iframe.style.width="100vw";
           iframe.style.border="none";
           iframe.style.background="black";
-          win.document.body.appendChild(iframe);
+          win.document.getElementsByTagName('body')[0].appendChild(iframe);
           // Tab settings
           win.document.title="ㅤㅤ";
           var icon=win.document.createElement("link");
           icon.setAttribute("rel","icon");
           icon.setAttribute("type","icon/png");
           icon.setAttribute("href","data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAAKSURBVHicY2QAAAAEAAIhZK1qAAAAAElFTkSuQmCC");
-          win.document.head.appendChild(icon);
+          win.document.getElementsByTagName('head')[0].appendChild(icon);
         }})();
     </script>
   </body>
