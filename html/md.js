@@ -50,7 +50,7 @@ function Regex4MDLink(text,pattern,replaceto){
 }
 function sanitizeURL4MD(url){
     url=url.trim();
-    const dangerous=/^(javascript|data|vbscript):/i;
+    const dangerous=/^(javascript|vbscript):/i;
     if(dangerous.test(url)){
         return "#";
     }
