@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script defer src="/main.js"></script>
+  <meta charset="UTF-8">
+  <title>URI Converter - Nobody</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;padding:2rem}
+    h1{margin-bottom:1.5rem;font-size:1.5rem}
+
+    .tabs{display:flex;gap:.25rem;margin-bottom:1rem}
+    .tab{padding:.35rem .9rem;border:1px solid var(--bg-3);border-radius:4px;cursor:pointer;font-size:.85rem;background:transparent}
+    .tab.active{background:var(--fg-dim);color:#000;border-color:transparent}
+
+    .card{border:1px solid var(--bg-3);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;background:var(--bg-input)}
+    .card.drag-over{border-color:var(--accent,#6ee7b7);opacity:.85}
+    label{display:block;margin-bottom:.5rem;font-size:.85rem}
+
+    input[type="file"]{width:100%;padding:.5rem;border:1px solid;border-radius:4px;cursor:pointer}
+
+    .url-row{display:flex;gap:.5rem}
+    .url-row input[type="text"]{flex:1;padding:.5rem .75rem;border:1px solid var(--bg-3);border-radius:4px;font-size:.9rem;background:var(--bg-input);color:inherit}
+    .url-row input[type="text"]:focus{outline:1px solid var(--accent,#6ee7b7)}
+
+    .drop-hint{text-align:center;padding:1.5rem;border:1.5px dashed var(--fg-dim);border-radius:6px;font-size:.8rem;color:var(--dim);margin-top:.75rem;pointer-events:none}
+
+    button{padding:.5rem 1.2rem;border:none;border-radius:4px;cursor:pointer;font-size:.9rem}
+    button:disabled{cursor:not-allowed;opacity:.4}
+    .btn-row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:1rem}
+
+    #status{margin-top:1rem;font-size:.85rem;min-height:1.2em;color:#6ee7b7}
+    #status.error{color:#f87171}
+
+    .output-section{display:none}
+    .output-section.visible{display:block}
+
+    .uri-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+    .uri-header label{margin:0}
+    .uri-len{font-size:.75rem;color:var(--dim)}
+
+    textarea{width:100%;height:120px;border:1px solid;border-radius:4px;font-size:.75rem;padding:.5rem;resize:vertical}
+
+    #previewImage{max-width:100%;max-height:300px;border-radius:4px;border:1px solid var(--border);display:block;margin-top:1rem}
+    .meta{font-size:.8rem;margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.4rem}
+    .tag{border-radius:4px;padding:.2rem .5rem;font-size:.75rem;background:var(--bg-3)}
+  </style>
+</head>
+<body>
+    <h1 style="display:inline;">Data URI Converter </h1>
+    <span style="display:inline;">Fully Client-side!</span>
+
+  <div class="card" id="inputCard">
+    <div class="tabs">
+      <button class="tab active" id="tabFile">File</button>
+      <button class="tab" id="tabUrl">URL</button>
+    </div>
+
+    <div id="paneFile">
+      <label for="fileInput">Select a file (image, text, audio, video, archive, PDF, …)</label>
+      <input type="file" id="fileInput">
+      <div class="drop-hint">or drag &amp; drop a file here</div>
+    </div>
+
+    <div id="paneUrl" style="display:none">
+      <label for="urlInput">Enter a file URL</label>
+      <div class="url-row">
+        <input type="text" id="urlInput" placeholder="https://example.com/image.png" spellcheck="false">
+        <button id="fetchBtn">Fetch</button>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="convertBtn" disabled>Convert to Data URI</button>
+      <button id="copyBtn" disabled>Copy URI</button>
+      <button id="downloadBtn" disabled>Download .txt</button>
+      <button id="resetBtn" style="margin-left:auto;opacity:.6" disabled>Clear</button>
+    </div>
+    <div id="status"></div>
+  </div>
+
+  <div id="metaCard" class="card output-section">
+    <label>File info</label>
+    <div id="metaInfo" class="meta"></div>
+  </div>
+
+  <div id="uriCard" class="card output-section">
+    <div class="uri-header">
+      <label>Data URI</label>
+      <span class="uri-len" id="uriLen"></span>
+    </div>
+    <textarea id="uriOutput" readonly></textarea>
+  </div>
+
+  <div id="previewCard" class="card output-section">
+    <label>Preview</label>
+    <img id="previewImage" alt="Preview">
+    <pre id="textPreview" style="white-space:pre-wrap;word-break:break-all;font-size:0.8rem;color:#d1d5db;max-height:200px;overflow:auto;"></pre>
+  </div>
+
+  <script>
+class URIConverter{
+  static MIME_OVERRIDES={
+        gz:"application/gzip",
+        zip:"application/zip",
+        tar:"application/x-tar",
+        rar:"application/vnd.rar",
+        "7z":"application/x-7z-compressed",
+        bz2:"application/x-bzip2",
+        xz:"application/x-xz",
+        pdf:"application/pdf",
+        json:"application/json",
+        xml:"application/xml",
+        csv:"text/csv",
+        md:"text/markdown",
+        svg:"image/svg+xml",
+        ttf:"font/truetype",
+        py:"text/x-python",
+        pyc:"application/x-python-code",
+        jar:"application/java-archive",
+        pyw:"text/x-python",
+        tar:"application/x-tar"
+      };
+    static resolveType(t){let e=t.name.split(".").pop().toLowerCase();return URIConverter.MIME_OVERRIDES[e]||t.type||"application/octet-stream"}static formatBytes(t){return t<1024?`${t} B`:t<1048576?`${(t/1024).toFixed(1)} KB`:`${(t/1048576).toFixed(2)} MB`}static convert(t){return new Promise((e,a)=>{let i=URIConverter.resolveType(t),n=new FileReader;n.onload=a=>{let n=a.target.result,r=n.split(";")[0].slice(5);r!==i&&(n=`data:${i};base64,`+n.split(",")[1]),e({uri:n,mime:i,size:t.size,name:t.name})},n.onerror=()=>a(Error("Failed to read file")),n.readAsDataURL(t)})}static decodeText(t){return decodeURIComponent(atob(t.split(",")[1]).split("").map(t=>"%"+t.charCodeAt(0).toString(16).padStart(2,"0")).join(""))}static async fromUrl(t){let e;try{e=await fetch(t)}catch{e=await fetch("https://corsproxy.io/?"+encodeURIComponent(t))}if(!e.ok)throw Error(`HTTP ${e.status}`);let a=await e.blob(),i=t.split("/").pop().split("?")[0]||"file",n=new File([a],i,{type:a.type});return URIConverter.convert(n)}
+}
+  const $=t=>document.getElementById(t),fileInput=$("fileInput"),urlInput=$("urlInput"),convertBtn=$("convertBtn"),copyBtn=$("copyBtn"),downloadBtn=$("downloadBtn"),resetBtn=$("resetBtn"),fetchBtn=$("fetchBtn"),status=$("status"),uriOutput=$("uriOutput"),uriLen=$("uriLen"),metaInfo=$("metaInfo"),previewImg=$("previewImage"),textPrev=$("textPreview"),inputCard=$("inputCard"),cards={meta:$("metaCard"),uri:$("uriCard"),preview:$("previewCard")};let lastResult=null,activeTab="file",pendingFile=null;function setStatus(t,e=!1){status.textContent=t,status.className=e?"error":""}function showCard(t,e=!0){cards[t].classList.toggle("visible",e)}function resetOutput(){Object.values(cards).forEach(t=>t.classList.remove("visible")),uriOutput.value="",uriLen.textContent="",previewImg.src="",textPrev.textContent="",lastResult=null,copyBtn.disabled=!0,downloadBtn.disabled=!0,resetBtn.disabled=!0,setStatus("")}function setReady(t){convertBtn.disabled=!t}$("tabFile").addEventListener("click",()=>{activeTab="file",$("tabFile").classList.add("active"),$("tabUrl").classList.remove("active"),$("paneFile").style.display="",$("paneUrl").style.display="none",setReady(!!pendingFile),resetOutput()}),$("tabUrl").addEventListener("click",()=>{activeTab="url",$("tabUrl").classList.add("active"),$("tabFile").classList.remove("active"),$("paneUrl").style.display="",$("paneFile").style.display="none",setReady(urlInput.value.trim().length>0),resetOutput()}),fileInput.addEventListener("change",()=>{setReady(!!(pendingFile=fileInput.files[0]||null)),resetOutput()}),urlInput.addEventListener("input",()=>{setReady(urlInput.value.trim().length>0)}),urlInput.addEventListener("keydown",t=>{"Enter"===t.key&&urlInput.value.trim()&&convertBtn.click()}),fetchBtn.addEventListener("click",()=>{"url"===activeTab&&convertBtn.click()}),inputCard.addEventListener("dragover",t=>{t.preventDefault(),inputCard.classList.add("drag-over")}),inputCard.addEventListener("dragleave",()=>inputCard.classList.remove("drag-over")),inputCard.addEventListener("drop",t=>{t.preventDefault(),inputCard.classList.remove("drag-over");let e=t.dataTransfer.files[0];if(!e)return;$("tabFile").click(),pendingFile=e;let a=new DataTransfer;a.items.add(e),fileInput.files=a.files,setReady(!0),setStatus(`Dropped: ${e.name}`)}),convertBtn.addEventListener("click",async()=>{resetOutput(),setStatus("Converting…"),convertBtn.disabled=!0;try{if("url"===activeTab){let t=urlInput.value.trim();if(!t)throw Error("Enter a URL first");lastResult=await URIConverter.fromUrl(t)}else{let e=pendingFile||fileInput.files[0];if(!e)throw Error("Select a file first");lastResult=await URIConverter.convert(e)}uriOutput.value=lastResult.uri,uriLen.textContent=lastResult.uri.length.toLocaleString()+" chars",metaInfo.innerHTML=[lastResult.name,lastResult.mime,URIConverter.formatBytes(lastResult.size)].map(t=>`<span class="tag">${t}</span>`).join(""),showCard("meta"),showCard("uri");let a=lastResult.mime.split("/")[0];if(previewImg.style.display="none",textPrev.style.display="none","image"===a)previewImg.src=lastResult.uri,previewImg.style.display="block",showCard("preview");else if(["text","application"].includes(a)||"image/svg+xml"===lastResult.mime)try{textPrev.textContent=URIConverter.decodeText(lastResult.uri).slice(0,2e3),textPrev.style.display="block",showCard("preview")}catch{showCard("preview",!1)}else showCard("preview",!1);copyBtn.disabled=!1,downloadBtn.disabled=!1,resetBtn.disabled=!1,setStatus("✓ Done")}catch(i){setStatus("Error: "+i.message,!0)}finally{convertBtn.disabled=!1}}),copyBtn.addEventListener("click",()=>{navigator.clipboard.writeText(uriOutput.value).then(()=>setStatus("✓ Copied to clipboard")).catch(()=>{uriOutput.select(),document.execCommand("copy"),setStatus("✓ Copied (fallback)")})}),downloadBtn.addEventListener("click",()=>{if(!lastResult)return;let t=Object.assign(document.createElement("a"),{href:URL.createObjectURL(new Blob([lastResult.uri],{type:"text/plain"})),download:lastResult.name+".datauri.txt"});t.click(),URL.revokeObjectURL(t.href)}),resetBtn.addEventListener("click",()=>{fileInput.value="",urlInput.value="",pendingFile=null,setReady(!1),resetOutput()});
+  </script>
+</body>
+</html>
