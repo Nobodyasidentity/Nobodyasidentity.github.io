@@ -56,6 +56,7 @@
 @font-face{font-family:seven;src:url(/files/fonts/seven.ttf);}
 @font-face{font-family:unifont;src:url(/files/fonts/unifont-16.0.04.ttf);}
 @font-face{font-family:unifont_smp_upper;src:url(/files/fonts/unifont-SMP-Upper-16.0.04.ttf);}
+@font-face{font-family:iconpack1;src:url(/files/fonts/iconpack1.ttf);}
 
 /* ── Reset / base ───────────────────────────────────────────── */
 *, *::before, *::after {
