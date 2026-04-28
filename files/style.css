@@ -56,7 +56,7 @@
 @font-face{font-family:seven;src:url(/files/fonts/seven.ttf);}
 @font-face{font-family:unifont;src:url(/files/fonts/unifont-16.0.04.ttf);}
 @font-face{font-family:unifont_smp_upper;src:url(/files/fonts/unifont-SMP-Upper-16.0.04.ttf);}
-@font-face{font-family:iconpack1;src:url(/files/fonts/iconpack1.ttf);}
+@font-face{font-family:iconpack1;src:url("/files/fonts/iconpack1.ttf");}
 
 /* ── Reset / base ───────────────────────────────────────────── */
 *, *::before, *::after {
@@ -125,9 +125,6 @@ a:hover, a:active {
   border-color: var(--red);
   cursor:       pointer;
 }
-a[download]::before { content: "📥 "; }
-a[download]::after { background: var(--blue-glow); }
-a[download]:hover {  border-color: var(--blue); box-shadow: var(--shadow-blue); }
 
 /* ── (Download-) Buttons ────────────────────────────────────── */
 button, a[download] {
@@ -175,6 +172,11 @@ button:disabled, a[download]:disabled { cursor: not-allowed; opacity: .4; }
 
 .btn-red::after{background:var(--red-glow);}
 .btn-red:hover{border-color:var(--red);box-shadow:var(--shadow-red);}
+
+a[download]::before { font-family: iconpack1; content: "q ";}
+a[download]::after  { background: var(--blue-glow); }
+a[download]:hover   { border-color: var(--blue); box-shadow: var(--shadow-blue); }
+a[download]         { padding-top: 0.6em; }
 
 /* ── Inputs & Textareas ─────────────────────────────────────── */
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
