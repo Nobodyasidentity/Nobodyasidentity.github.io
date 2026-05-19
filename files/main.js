@@ -1,7 +1,7 @@
 (function(){
   const htmlEl=document.documentElement;
   const url=new URL(document.currentScript?.src);
-  const hash=url.hash.slice(1);
+  const hash=url.hash.slice(1)||"https://Nobodyasidentity.github.io";
   function applyTheme(theme){
     htmlEl.setAttribute('data-theme',theme);
     localStorage.setItem('theme',theme);
