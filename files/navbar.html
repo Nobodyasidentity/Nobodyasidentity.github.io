@@ -1,3 +1,5 @@
+<br><br><br><br>
+<meta charset="UTF-8">
 <nav class="navbar">
   <hover class="logo" style="border-bottom:none;"><img src="/files/icon.png" width="50px">
     <onhover>
@@ -40,11 +42,11 @@ html, body {
   overflow-x: hidden;
 }
 :root[data-theme="light"] {
-  --nav-bg: rgba(50,50,50,0.5);
-  --nav-text: #fff;
+  --nav-bg: rgba(150,150,150,0.5);
+  --nav-text: #000;
 }
 :root[data-theme="dark"] {
-  --nav-bg: rgba(30,30,30,0.5);
+  --nav-bg: rgba(20,20,20,0.7);
   --nav-text: #fff;
 }
 .navbar,
@@ -53,13 +55,17 @@ html, body {
   overflow: visible;
 }
 .navbar {
-  position: sticky;
-  top: 0;
+  position:fixed;
+  top: 5px;
   z-index: 1000;
+  width: calc(100% - 10px);
+  left:5px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+  
+  border-radius:10px;
 
   padding: 10px 20px;
   background: var(--nav-bg);
@@ -88,7 +94,6 @@ html, body {
   text-decoration: none;
 }
 
-/* Nav-specific details/summary — floats below navbar, doesn't affect layout */
 .nav-links details {
   display: inline-block;
   vertical-align: middle;
@@ -114,7 +119,6 @@ html, body {
 .nav-links details > summary::-webkit-details-marker {
   display: none;
 }
-/* Outer div: absolutely positioned float below the summary */
 .nav-links details > div {
   position: absolute;
   top: calc(100% + 6px);
@@ -126,7 +130,6 @@ html, body {
   backdrop-filter: blur(8px);
   border-radius: 6px;
   overflow: hidden;
-  /* grid animation on the outer div itself */
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.25s ease;
@@ -134,7 +137,6 @@ html, body {
 .nav-links details[open] > div {
   grid-template-rows: 1fr;
 }
-/* Inner wrapper needed for 0fr collapse */
 .nav-links details > div > * {
   min-height: 0;
   padding: 4px 8px;
@@ -146,7 +148,6 @@ html, body {
   color: var(--nav-text);
   white-space: nowrap;
 }
-/* Nested details inside the dropdown */
 .nav-links details details {
   display: block;
   position: static;
