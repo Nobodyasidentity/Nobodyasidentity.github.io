@@ -20,6 +20,7 @@
       "pages":[
         {
           "title":"Guide",
+          "open":true,
           "pages":[
             {"title":"Enchantments Guide","url":"/mc/guide/enchants"}
           ]
