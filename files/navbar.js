@@ -82,6 +82,7 @@ function initNavbar(){
           if(item.pages&&item.pages.length>0){
             const folder=document.createElement('div');
             folder.className='branch-folder';
+            if(item.open&&item.open==true)folder.classList.toggle('open');
 
             const folderBtn=document.createElement('button');
             folderBtn.className='branch-folder-btn';
