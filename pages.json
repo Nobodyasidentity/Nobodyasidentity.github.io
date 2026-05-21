@@ -25,6 +25,13 @@
           ]
         }
       ]
+    },
+    {
+      "label":"SGC",
+      "pages":[
+        {"title":"GamerBot Public Info Lookup","url":"/sgc/lvl"},
+        {"title":"SGC-style Title Generator","url":"/sgc/title-generator"}
+      ]
     }
   ]
 }
