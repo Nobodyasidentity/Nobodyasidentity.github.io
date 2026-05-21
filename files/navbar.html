@@ -53,6 +53,7 @@ html, body {
 .nav-links,
 .nav-links li {
   overflow: visible;
+  transition:color 0.3s ease;
 }
 .navbar {
   position:fixed;
@@ -66,6 +67,7 @@ html, body {
   justify-content: space-between;
   
   border-radius:10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   padding: 10px 20px;
   background: var(--nav-bg);
@@ -74,6 +76,7 @@ html, body {
 }
 .logo {
   color: var(--nav-text);
+  transition:color 0.3s ease;
   font-size: 24px;
   font-weight: 600;
 }
@@ -87,6 +90,7 @@ html, body {
 .nav-links a,
 .nav-links button {
   color: var(--nav-text);
+  transition:color 0.3s ease;
   background: none;
   border: none;
   font-size: 16px;
@@ -110,6 +114,7 @@ html, body {
 }
 .nav-links details > summary {
   color: var(--nav-text);
+  transition:color 0.11s ease;
   font-weight: normal;
   padding: 0;
   display: inline;
@@ -132,7 +137,7 @@ html, body {
   overflow: hidden;
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.25s ease;
+  transition: grid-template-rows 0.25s ease, background-color 0.3s ease;
 }
 .nav-links details[open] > div {
   grid-template-rows: 1fr;
@@ -146,6 +151,7 @@ html, body {
   display: block;
   padding: 4px 0;
   color: var(--nav-text);
+  transition:color 0.11s ease;
   white-space: nowrap;
 }
 .nav-links details details {
@@ -168,6 +174,7 @@ html, body {
   display: none;
   font-size: 28px;
   color: var(--nav-text);
+  transition:color 0.3s ease;
   cursor: pointer;
   user-select: none;
 }
@@ -199,7 +206,8 @@ html, body {
     transition:
       opacity 160ms ease-out,
       transform 160ms ease-out,
-      visibility 0s linear 160ms;
+      visibility 0s linear 160ms,
+      background-color 0.3s ease;
 
     z-index: 999;
   }
