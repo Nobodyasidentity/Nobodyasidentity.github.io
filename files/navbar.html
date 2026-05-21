@@ -3,31 +3,32 @@
 <nav class="navbar">
   <hover class="logo" style="border-bottom:none;"><img src="/files/icon.png" width="50px">
     <onhover>
-      <p>v1.1</p>
+      <p>v1.2</p>
+      <span><u>Contacts</u><br>
+        <a href="https://discord.com/users/821999148156715029">Discord Profile</a><br>
+        <a href="https://discord.com/invite/NhRxv3bfPD">Weird & Wacky Discord server</a><br>
+        <a href="https://github.com/Nobodyasidentity">GitHub Profile</a><br>
+      </span>
       <span style="width:100%;text-align:center;font-size:11px;color:var(--fg-dim);letter-spacing:0.04em;pointer-events:none;">Copyright © 2026 Nobodyasidentity | All rights reserved unless explicitly stated.</span>
     </onhover></hover>
+  <span style="color:var(--red-dim)">This is a preview site where I test things before they fully get added to the <a href="https://nobodyasidentity.github.io/">full website</a>.</span>
   <input type="checkbox" id="menu-toggle">
   <label for="menu-toggle" class="menu-icon">&#9776;</label>
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
-    <li>
-      <details>
-        <summary>Branches</summary>
-        <div><div>
-          <details>
-            <summary>HTML</summary>
-            <div><div><a href="/html/v0">V0</a><a href="/html/md">Markdown Experiment</a><a href="/html/uri-converter">Data URI Converter</a></div></div>
-          </details>
-          <details>
-            <summary>Minecraft &gt; Guide</summary>
-            <div><div><a href="/mc/guide/enchants">Enchantments</a></div></div>
-          </details>
-        </div></div>
-      </details>
+    <li class="branches-item">
+      <button class="branches-btn" aria-expanded="false" aria-haspopup="true">
+        Branches <span class="branches-arrow" aria-hidden="true"></span>
+      </button>
+      <div class="branches-panel" role="menu">
+        <div class="branches-inner" id="branches-inner">
+        </div>
+      </div>
     </li>
     <li><button id="theme-toggle" class="theme-btn">🌙</button></li>
   </ul>
 </nav>
+
 <style>
 /* =========================================================
    NAVBAR CSS. DO NOT TOUCH! (WORST MISTAKE OF MY LIFE)
@@ -226,6 +227,237 @@ html, body {
   .nav-links {
     transition: none !important;
     transform: none !important;
+  }
+}
+
+/* =========================================================
+   BRANCHES MEGA-MENU
+   ========================================================= */
+
+.branches-item {
+  position: relative;
+  list-style: none;
+}
+
+.branches-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  font-size: 16px;
+  color: var(--nav-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.branches-arrow {
+  display: inline-block;
+  font-size: 11px;
+  transition: transform 0.22s ease;
+  line-height: 1;
+  position: relative;
+  top: 1px;
+}
+
+.branches-btn[aria-expanded="true"] .branches-arrow {
+  transform: rotate(180deg);
+}
+
+.branches-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+
+  display: grid;
+  grid-template-rows: 0fr;
+  transition:
+    grid-template-rows 0.25s ease,
+    opacity 0.2s ease,
+    background-color 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
+  min-width: 260px;
+
+  outline: 1px solid rgba(128,128,128,0.2);
+}
+
+.branches-panel.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.branches-inner {
+  min-height: 0;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  padding: 10px 6px;
+}
+
+.branch-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 10px;
+  flex: 1;
+}
+
+.branch-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nav-text);
+  opacity: 0.45;
+  padding: 0 0 6px 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.branch-col a {
+  display: block;
+  font-size: 14px;
+  color: var(--nav-text);
+  text-decoration: none;
+  padding: 5px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: background 0.15s ease, opacity 0.15s ease;
+  opacity: 0.85;
+}
+
+.branch-col a:hover {
+  background: rgba(128,128,128,0.18);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 1;
+}
+
+.branch-folder-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 14px;
+  color: var(--nav-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.branch-folder-btn:hover {
+  background: rgba(128,128,128,0.18);
+  opacity: 1;
+}
+
+.branch-folder-arrow {
+  font-size: 11px;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.branch-folder.open > .branch-folder-btn .branch-folder-arrow {
+  transform: rotate(90deg);
+}
+
+.branch-folder-pages {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.branch-folder.open > .branch-folder-pages {
+  grid-template-rows: 1fr;
+}
+
+.branch-folder-inner {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 10px;
+  padding-top: 2px;
+}
+
+.branch-divider {
+  width: 1px;
+  background: rgba(128,128,128,0.2);
+  margin: 6px 0;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+@media (max-width: 768px) {
+  .branches-item {
+    position: static;
+    width: 100%;
+    text-align: center;
+  }
+
+  .branches-panel {
+    position: static;
+    transform: none;
+    left: auto;
+    top: auto;
+
+    background: rgba(128,128,128,0.12);
+    backdrop-filter: none;
+    outline: none;
+    border-radius: 8px;
+    width: 100%;
+    min-width: 0;
+    margin-top: 6px;
+  }
+
+  .branches-inner {
+    flex-direction: column;
+    padding: 6px 0;
+    gap: 0;
+  }
+
+  .branch-divider {
+    width: 100%;
+    height: 1px;
+    margin: 4px 0;
+    align-self: auto;
+  }
+
+  .branch-col {
+    padding: 4px 16px;
+    align-items: center;
+  }
+
+  .branch-col a,
+  .branch-folder-btn {
+    text-align: center;
+    width: 100%;
+  }
+
+  .branch-folder-inner {
+    align-items: center;
+    padding-left: 0;
   }
 }
 </style>

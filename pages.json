@@ -1,7 +1,30 @@
-[
-  ["/home", "Home"],
-  ["/html/v0", "HTML > HTML online IDE V0"],
-  ["/mc/guide/enchants", "Enchantment Guide - Minecraft"],
-  ["/html/md", "HTML > Markdown"],
-  ["/html/uri-converter", "HTML > Data URI Converter"]
-]
+{
+  "branches":[
+    {
+      "label":"",
+      "pages":[
+        {"title":"Home","url":"/home"},
+        {"title":"Data URI Converter","url":"/uri-converter"}
+      ]
+    },
+    {
+      "label":"HTML",
+      "pages":[
+        {"title":"HTML IDE V0","url":"/html/v0"},
+        {"title":"Markdown Experiment","url":"/html/md"},
+        {"title":"Hidden WebPage","url":"/html/blank"}
+      ]
+    },
+    {
+      "label":"Minecraft",
+      "pages":[
+        {
+          "title":"Guide",
+          "pages":[
+            {"title":"Enchantments Guide","url":"/mc/guide/enchants"}
+          ]
+        }
+      ]
+    }
+  ]
+}
