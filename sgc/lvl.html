@@ -14,12 +14,17 @@
       border-radius:10px;
       overflow:hidden;
       margin-top:10px;
+      position:relative;
     }
     #progressBar{
       height:100%;
       width:0%;
       background:#4caf50;
       transition:width 0.3s ease;
+      position:absolute;
+      top:0;
+      left:0;
+      z-index:0;
     }
     #progressText,#messageEstimate{
       margin-top:5px;
@@ -28,39 +33,43 @@
     #progressText{
       margin-top:0px;
       padding-left:10px;
+      position:absolute;
+      top:0;
+      left:0;
     }
   </style>
 </head>
 <body>
-  <button onclick="fetchInfo(User.id.value||defaultId)">Fetch Info</button>
-  <table>
-    <tr>
-      <th>User ID:</th>
-      <th><input id="userId" placeholder="Example: 821999148156715029"></th>
-    </tr>
-    <tr>
-      <th>Level:</th>
-      <th id="userLevel">?</th>
-    </tr>
-    <tr>
-      <th>XP:</th>
-      <th id="userXp">?</th>
-    </tr>
-    <tr>
-      <th>Frame:</th>
-      <th><img style="max-width:200px;" id="userFrame"></th>
-    </tr>
-  </table>
-  <div id="progressContainer">
-    <div id="progressBar">
-      <div id="progressText"></div>
+  <div style="margin:50px auto;text-align:left;max-width:600px;padding:1.5rem;">
+    <button onclick="fetchInfo(User.id.value||defaultId)">Fetch Info</button>
+    <table>
+      <tr>
+        <th>User ID:</th>
+        <th><input id="userId" placeholder="Example: 821999148156715029" type="number"></th>
+      </tr>
+      <tr>
+        <th>Level:</th>
+        <th id="userLevel">?</th>
+      </tr>
+      <tr>
+        <th>XP:</th>
+        <th id="userXp">?</th>
+      </tr>
+      <tr>
+        <th>Frame:</th>
+        <th><img style="max-width:200px;" id="userFrame"></th>
+      </tr>
+    </table>
+    <div id="progressContainer">
+      <div id="progressBar"></div>
+        <div id="progressText"></div>
     </div>
+    <div id="messageEstimate"></div>
+    <details>
+      <summary>raw data</summary>
+      <pre id="out" class="codeblock"></pre>
+    </details>
   </div>
-  <div id="messageEstimate"></div>
-  <details>
-    <summary>raw data</summary>
-    <pre id="out" class="codeblock"></pre>
-  </details>
   <script>
     const defaultId="821999148156715029";
     const out=document.getElementById('out');
