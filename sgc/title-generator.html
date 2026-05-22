@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <script defer src="/main.js"></script>
+  <title>SGC Titel Generator</title>
   <style>
     @font-face{font-family:sansumu;src:url(./sansumu.ttf)}
     .sgc-h1{text-align:center;color:#43b91d;font-family:sansumu;}
+    #size{width:100px;}
   </style>
 </head>
 <body>
   <center>
     <h1>SGC Titel Generator</h1>
     <p>Genererar en bild med SGCs titel stil</p>
-    <textarea id="input" type="text" placeholder="Skriv något..." oninput="preview()" style="width:50%"></textarea>
+    <textarea id="input" type="text" placeholder="Skriv något..." oninput="preview()" style="width:50%"></textarea><br>
+    <label for="size">Text Storlek: </label><input type="number" onchange="update_size()" id="size" name="Text Storlek" min="1" value=50 placeholder="50">
     <p>F&#xf6;rhandsgranskning</p>
     <div class="codeblock">
       <h1 class="sgc-h1" id="target"></h1>
@@ -21,64 +25,59 @@
   </center>
 
   <script>
-    function preview() {
-      document.getElementById('target').innerText = document.getElementById('input').value;
+    function update_size(){
+      document.getElementById('target').style.fontSize=document.getElementById('size').value+'px';
+      preview()
     }
-
-    async function download() {
-      try {
-        const el = document.getElementById('target');
-        const dataUrl = await htmlToPng(el);
-        const text = el.textContent.trim();
-        const safeName = text.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase();
-        const a = document.createElement('a');
-        a.download = `${safeName}.png`;
-        a.href = dataUrl;
+    function preview(){document.getElementById('target').innerText=document.getElementById('input').value;}
+    async function download(){
+      try{
+        const el=document.getElementById('target');
+        const dataUrl=await htmlToPng(el);
+        const text=el.textContent.trim();
+        const safeName=text.replace(/[^a-z0-9_\-]/gi,'_').toLowerCase();
+        const a=document.createElement('a');
+        a.download=`${safeName}.png`;
+        a.href=dataUrl;
         a.click();
-      } catch (e) {
-        alert('Error: ' + e.message);
+      } catch (e){
+        alert('Error: '+e.message);
         console.error(e);
       }
     }
-  </script>
-  <script>
-async function htmlToPng(element) {
+async function htmlToPng(element){
   await document.fonts.ready;
+  const style=getComputedStyle(element);
+  const scale=3;
 
-  const style = getComputedStyle(element);
-  const scale = 3;
-
-  const font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-  const color = style.color;
-  const align = style.textAlign === 'center' ? 'center' : (style.textAlign === 'right' ? 'right' : 'left');
-
-  const lines = element.innerText.split('\n');
-
-  const measure = document.createElement('canvas').getContext('2d');
-  measure.font = font;
-
-  const lineMetrics = lines.map(line => measure.measureText(line || ' '));
-  const lineHeight = Math.ceil(lineMetrics[0].actualBoundingBoxAscent + lineMetrics[0].actualBoundingBoxDescent) * 1.4;
-  const width = Math.ceil(Math.max(...lineMetrics.map(m => m.width)));
-  const height = Math.ceil(lineHeight * lines.length);
-
-  const canvas = document.createElement('canvas');
-  canvas.width  = width  * scale;
-  canvas.height = height * scale;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(scale, scale);
-  ctx.font = font;
-  ctx.fillStyle = color;
-  ctx.textAlign = align;
-  ctx.textBaseline = 'top';
-
-  const x = align === 'center' ? width / 2 : align === 'right' ? width : 0;
-  lines.forEach((line, i) => {
-    ctx.fillText(line, x, i * lineHeight);
+  const font=`${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const color=style.color;
+  const align=style.textAlign==='center'?'center':(style.textAlign==='right'?'right':'left');
+  const lines=element.innerText.split('\n');
+  const measure=document.createElement('canvas').getContext('2d');
+  measure.font=font;
+  const lineMetrics=lines.map(line=>measure.measureText(line||' '));
+  const lineHeight=Math.ceil(lineMetrics[0].actualBoundingBoxAscent+lineMetrics[0].actualBoundingBoxDescent)*1.4;
+  const width=Math.ceil(Math.max(...lineMetrics.map(m=>m.width)));
+  const height=Math.ceil(lineHeight*lines.length);
+  const canvas=document.createElement('canvas');
+  canvas.width=width*scale;
+  canvas.height=height*scale;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(scale,scale);
+  ctx.font=font;
+  ctx.fillStyle=color;
+  ctx.textAlign=align;
+  ctx.textBaseline='top';
+  const x=align==='center'?width/2:align==='right'?width:0;
+  lines.forEach((line,i)=>{
+    ctx.fillText(line,x,i*lineHeight);
   });
-
   return canvas.toDataURL('image/png');
 }
+    (()=>{
+      update_size()
+    })()
   </script>
 </body>
 </html>
