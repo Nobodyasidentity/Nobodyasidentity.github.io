@@ -12,7 +12,7 @@
       "pages":[
         {"title":"HTML IDE V0","url":"/html/v0"},
         {"title":"Markdown Experiment","url":"/html/md"},
-        {"title":"Hidden WebPage","url":"/html/blank"}
+        {"title":"Hidden WebPage","url":"/html/blank","works":{"app":false}}
       ]
     },
     {

@@ -5,6 +5,15 @@ function initNavbar(){
   if(!htmlEl.getAttribute('data-theme')){
     htmlEl.setAttribute('data-theme',localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
   }
+  function isElectron(){
+    return navigator.userAgent.toLowerCase().includes('electron');
+  }
+  function pageAvailable(item){
+    if(!item.works)return true;
+    const env=isElectron()?'app':'web';
+    if(!(env in item.works))return true;
+    return item.works[env]!==false;
+  }
   fetch(`${hash}/files/navbar.html`).then(res=>res.text()).then(html=>{
     document.body.insertAdjacentHTML('afterbegin',html);
     const toggleBtn=document.getElementById('theme-toggle');
@@ -80,6 +89,9 @@ function initNavbar(){
         }
         function buildItem(item){
           if(item.pages&&item.pages.length>0){
+            const visiblePages=item.pages.filter(pageAvailable);
+            if(visiblePages.length===0) return null;
+
             const folder=document.createElement('div');
             folder.className='branch-folder';
             if(item.open&&item.open==true)folder.classList.toggle('open');
@@ -105,7 +117,10 @@ function initNavbar(){
             const pagesInner=document.createElement('div');
             pagesInner.className='branch-folder-inner';
 
-            item.pages.forEach(child=>pagesInner.appendChild(buildItem(child)));
+            visiblePages.forEach(child=>{
+              const el=buildItem(child);
+              if(el) pagesInner.appendChild(el);
+            });
             pagesWrap.appendChild(pagesInner);
             folder.appendChild(pagesWrap);
 
@@ -124,6 +139,9 @@ function initNavbar(){
         }
 
         pages.branches.forEach((branch,i)=>{
+          const visiblePages=(branch.pages||[]).filter(pageAvailable);
+          if(visiblePages.length===0) return;
+
           if(i>0){
             const divider=document.createElement('div');
             divider.className='branch-divider';
@@ -135,8 +153,9 @@ function initNavbar(){
           labelEl.className='branch-label';
           labelEl.textContent=branch.label;
           col.appendChild(labelEl);
-          (branch.pages||[]).forEach(page=>{
-            col.appendChild(buildItem(page));
+          visiblePages.forEach(page=>{
+            const el=buildItem(page);
+            if(el) col.appendChild(el);
           });
           branchesInner.appendChild(col);
         });

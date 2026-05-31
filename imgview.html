@@ -85,11 +85,14 @@
 </div>
 <script src="/files/panzoom.js"></script>
 <script>
+  const icon=document.querySelector('link[rel="icon"]');
+  const title=document.querySelector('title');
   const src=location.hash.slice(1);
   if (!src){
     document.body.innerHTML='<p style="color:red;padding:1rem">No image specified.</p>';
     throw new Error('No image src');
   }
+  const fileName=src.split('#')[0].split('?')[0].split('/').pop();
   const container=document.getElementById('container');
   const panzoomEl=document.getElementById('panzoom');
   const img=document.getElementById('image');
@@ -203,6 +206,8 @@
     });
   };
   img.src=src;
+  icon.href=src;
+  title.innerText=`${fileName} | Image Viewer - Nobody`;
 </script>
 </body>
 </html>
