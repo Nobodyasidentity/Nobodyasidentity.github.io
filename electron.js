@@ -1,4 +1,4 @@
-const { app, BrowserWindow, protocol, net, Menu, nativeImage } = require('electron');
+const { app, BrowserWindow, protocol, net, Menu, nativeImage, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -20,7 +20,6 @@ const createWindow = () => {
     icon: nativeImage.createFromPath(path.join(__dirname, 'files/icon.png')),
     webPreferences: {
       contextIsolation: false,
-      //nodeIntegration: true,
     }
   });
   win.loadURL('app:///index.html');
@@ -45,8 +44,19 @@ app.whenReady().then(() => {
 
   app.on('web-contents-created', (event, contents) => {
     contents.setWindowOpenHandler(({ url }) => {
-      BrowserWindow.fromWebContents(contents)?.loadURL(url);
+      if (url.startsWith('app://')) {
+        BrowserWindow.fromWebContents(contents)?.loadURL(url);
+      } else {
+        shell.openExternal(url);
+      }
       return { action: 'deny' };
+    });
+
+    contents.on('will-navigate', (event, url) => {
+      if (!url.startsWith('app://')) {
+        event.preventDefault();
+        shell.openExternal(url);
+      }
     });
 
     contents.on('did-finish-load', () => {
