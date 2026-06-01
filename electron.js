@@ -20,9 +20,12 @@ const createWindow = () => {
     icon: nativeImage.createFromPath(path.join(__dirname, 'files/icon.png')),
     webPreferences: {
       contextIsolation: false,
-    }
+    },
+    show: false,
   });
   win.loadURL('app:///index.html');
+  win.maximize();
+  win.show();
 };
 
 app.whenReady().then(() => {
