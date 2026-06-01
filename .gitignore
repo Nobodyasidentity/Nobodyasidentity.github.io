@@ -2,3 +2,4 @@ package-lock.json
 forge.config.js
 node_modules/
 out/
+*.exe
