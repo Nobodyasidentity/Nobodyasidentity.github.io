@@ -2,6 +2,7 @@
   const htmlEl=document.documentElement;
   const url=new URL(document.currentScript?.src);
   const hash = url.hash.slice(1)||(typeof process!=='undefined'&&process.versions?.electron?'app://':'https://Nobodyasidentity.github.io');
+  if(url.hash.slice(1)=='/'){hash='';}
   function applyTheme(theme){
     htmlEl.setAttribute('data-theme',theme);
     localStorage.setItem('theme',theme);
