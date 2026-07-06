@@ -7,6 +7,6 @@
     s.src=src;
     document.body.appendChild(s);
   }
-  loadScript(`${hash}/files/main.js`);
+  loadScript(`${hash}/files/main.js#/`);
   loadScript(`${hash}/files/navbar.js`);
 })();
