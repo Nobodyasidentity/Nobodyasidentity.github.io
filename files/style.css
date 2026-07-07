@@ -1,86 +1,104 @@
-/* ── Variables ─────────────────────────────────────────────── */
 :root {
-  --red:        #e03030;
-  --red-dim:    #9b1c1c;
-  --red-glow:   rgba(224, 48, 48, 0.18);
-  --red-sel:    rgba(224, 48, 48, 0.35);
+  --red: #e03030;
+  --red-dim: #9b1c1c;
+  --red-glow: rgba(224, 48, 48, 0.18);
+  --red-sel: rgba(224, 48, 48, 0.35);
 
-  --green:      #47e030;
-  --green-dim:  #1c9b1e;
+  --green: #47e030;
+  --green-dim: #1c9b1e;
   --green-glow: rgba(69, 224, 48, 0.18);
-  --green-sel:  rgba(69, 224, 48, 0.35);
+  --green-sel: rgba(69, 224, 48, 0.35);
 
-  --blue:       #3079e0;
-  --blue-dim:   #1c559b;
-  --blue-glow:  rgba(48, 115, 224, 0.18);
-  --blue-sel:   rgba(48, 115, 224, 0.35);
+  --blue: #3079e0;
+  --blue-dim: #1c559b;
+  --blue-glow: rgba(48, 115, 224, 0.18);
+  --blue-sel: rgba(48, 115, 224, 0.35);
 
-  --bg:         light-dark(#e8e8e8, #141414);
-  --bg-2:       light-dark(#d8d8d8, #1e1e1e);
-  --bg-3:       light-dark(#cacaca, #2a2a2a);
-  --bg-input:   light-dark(#d0d0d0, #252525);
-  --bg-code:    light-dark(#1a1a1a, #0d0d0d);
+  --bg: light-dark(#e8e8e8, #141414);
+  --bg-2: light-dark(#d8d8d8, #1e1e1e);
+  --bg-3: light-dark(#cacaca, #2a2a2a);
+  --bg-input: light-dark(#d0d0d0, #252525);
+  --bg-code: light-dark(#1a1a1a, #0d0d0d);
 
-  --fg:         light-dark(#111111, #e8e8e8);
-  --fg-dim:     light-dark(#555555, #888888);
+  --fg: light-dark(#111111, #e8e8e8);
+  --fg-dim: light-dark(#555555, #888888);
 
-  --border:     light-dark(rgba(0,0,0,0.12), rgba(255,255,255,0.08));
+  --border: light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.08));
   --border-focus: var(--red);
 
-  --radius:     6px;
-  --radius-lg:  10px;
+  --radius: 6px;
+  --radius-lg: 10px;
 
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.2);
-  --shadow-md:  0 4px 14px rgba(0,0,0,0.25);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.25);
   --shadow-red: 0 0 16px var(--red-glow);
-  --shadow-blue:  0 0 16px var(--blue-glow);
+  --shadow-blue: 0 0 16px var(--blue-glow);
   --shadow-green: 0 0 16px var(--green-glow);
 
   --transition: 0.15s ease;
 
-  --font-mono:  courier, "Courier New", monospace;
-  --font-code:  fira, "Fira Code", "Cascadia Code", monospace;
-  --font-mc:    seven, unifont, unifont_smp_upper, monospace;
+  --font-mono: courier, "Courier New", monospace;
+  --font-code: fira, "Fira Code", "Cascadia Code", monospace;
+  --font-mc: seven, unifont, unifont_smp_upper, monospace;
+  --font-sgc: sansumu, monospace;
 }
 
-[data-theme="light"] { color-scheme: light; }
-[data-theme="dark"]  { color-scheme: dark;  }
+[data-theme="light"]{color-scheme: light;}[data-theme="dark"]{color-scheme: dark;}
+::selection{background:var(--red-sel);color:inherit;}
+::-moz-selection{background:var(--red-sel);color:inherit;}
 
-/* ── Selection ──────────────────────────────────────────────── */
-::selection      { background: var(--red-sel); color: inherit; }
-::-moz-selection { background: var(--red-sel); color: inherit; }
+@font-face {
+  font-family: courier;
+  src: url(/files/fonts/courier.ttf);
+}
+@font-face {
+  font-family: fira;
+  src: url(/files/fonts/fira.ttf);
+}
+@font-face {
+  font-family: seven;
+  src: url(/files/fonts/seven.ttf);
+}
+@font-face {
+  font-family: unifont;
+  src: url(/files/fonts/unifont-16.0.04.ttf);
+}
+@font-face {
+  font-family: unifont_smp_upper;
+  src: url(/files/fonts/unifont-SMP-Upper-16.0.04.ttf);
+}
+@font-face {
+  font-family: iconpack1;
+  src: url("/files/fonts/iconpack1.ttf");
+}
+@font-face {
+  font-family: sansumu;
+  src: url("/sgc/sansumu.ttf");
+}
 
-/* ── Font faces ─────────────────────────────────────────────── */
-@font-face{font-family:courier;src:url(/files/fonts/courier.ttf);}
-@font-face {font-family:fira;src:url(/files/fonts/fira.ttf);}
-@font-face{font-family:seven;src:url(/files/fonts/seven.ttf);}
-@font-face{font-family:unifont;src:url(/files/fonts/unifont-16.0.04.ttf);}
-@font-face{font-family:unifont_smp_upper;src:url(/files/fonts/unifont-SMP-Upper-16.0.04.ttf);}
-@font-face{font-family:iconpack1;src:url("/files/fonts/iconpack1.ttf");}
-
-/* ── Reset / base ───────────────────────────────────────────── */
-*, *::before, *::after {
+*,*::before,*::after{
   box-sizing: border-box;
   font-family: inherit;
-  font-size:   inherit;
+  font-size: inherit;
 }
 
 body {
-  font-size:        16px;
-  line-height:      1.65;
-  font-family:      var(--font-mono);
+  font-size: 16px;
+  line-height: 1.65;
+  font-family: var(--font-mono);
   background-color: var(--bg);
-  color:            var(--fg);
-  background-image:
-    radial-gradient(ellipse at 20% 0%,
-      light-dark(rgba(224,48,48,0.04), rgba(224,48,48,0.07)) 0%,
-      transparent 60%);
+  color: var(--fg);
+  background-image: radial-gradient(
+    ellipse at 20% 0%,
+    light-dark(rgba(224, 48, 48, 0.04), rgba(224, 48, 48, 0.07)) 0%,
+    transparent 60%
+  );
 
   min-height: 100vh;
   background-attachment: fixed;
   background-repeat: no-repeat;
 
-  -webkit-font-smoothing:  antialiased;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -88,193 +106,235 @@ body {
 body.bgimg {
   background-image: url("/files/bg.jpg");
   background-color: #000;
-  min-height:       100vh;
+  min-height: 100vh;
   background-position: center;
-  background-repeat:   no-repeat;
-  background-size:     cover;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-/* ── Typography ─────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  line-height:   1.2;
-  margin-top:    1.5em;
+h1,h2,h3,h4,h5,h6 {
+  line-height: 1.2;
+  margin-top: 1.5em;
   margin-bottom: 0.4em;
   letter-spacing: -0.02em;
 }
-h1 { font-size: 2.2em; }
-h2 { font-size: 1.7em; }
-h3 { font-size: 1.4em; }
-h4 { font-size: 1.2em; }
-h5 { font-size: 1.1em; }
-h6 { font-size: 1em;   color: var(--fg-dim); }
+h1{font-size: 2.2em;}
+h2{font-size: 1.7em;}
+h3{font-size: 1.4em;}
+h4{font-size: 1.2em;}
+h5{font-size: 1.1em;}
+h6{font-size: 1em;color:var(--fg-dim);}
 
-p  { margin: 0.75em 0; }
+p {
+  margin: 0.75em 0;
+}
 
-sub{ font-size: small; }
-sup{ font-size: small; }
-/* ── Links ──────────────────────────────────────────────────── */
-a:link, a:visited {
-  color:           var(--red);
+sub,sup{font-size:small;}
+
+.sgc-h1{
+  color:#43b91d;
+  font-family:var(--font-sgc);
+}
+a:link,a:visited{
+  color: var(--red);
   text-decoration: none;
-  border-bottom:   1px solid transparent;
-  transition:      border-color var(--transition), filter var(--transition);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition), filter var(--transition);
 }
-a:hover, a:active {
-  color:        var(--red);
-  filter:       brightness(115%);
+a:hover,a:active{
+  color: var(--red);
+  filter: brightness(115%);
   border-color: var(--red);
-  cursor:       pointer;
+  cursor: pointer;
 }
 
-/* ── (Download-) Buttons ────────────────────────────────────── */
-button, a[download] {
-  font-family:      var(--font-mono);
-  font-size:        inherit;
+button,a[download] {
+  font-family: var(--font-mono);
+  font-size: inherit;
   background-color: var(--bg-3);
-  color:            var(--fg);
-  border:           1px solid var(--border);
-  border-radius:    var(--radius);
-  padding:          0.4em 1em;
-  cursor:           pointer;
-  transition:       background-color var(--transition),
-                    border-color var(--transition),
-                    box-shadow var(--transition),
-                    transform 0.08s ease;
-  position:         relative;
-  overflow:         hidden;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4em 1em;
+  cursor: pointer;
+  transition: background-color var(--transition), border-color var(--transition),
+    box-shadow var(--transition), transform 0.08s ease;
+  position: relative;
+  overflow: hidden;
 }
-button::after, a[download]::after {
-  content: '';
+button::after,a[download]::after {
+  content: "";
   position: absolute;
   inset: 0;
   background: var(--red-glow);
   opacity: 0;
   transition: opacity var(--transition);
 }
-button:hover, a[download]:hover {
+button:hover,a[download]:hover {
   background-color: var(--bg-2);
-  border-color:     var(--red);
-  box-shadow:       var(--shadow-red);
+  border-color: var(--red);
+  box-shadow: var(--shadow-red);
 }
-button:hover::after, a[download]:hover::after { opacity: 1; }
-button:active, a[download]:active {
+button:hover::after,a[download]:hover::after {
+  opacity: 1;
+}
+button:active,a[download]:active {
   transform: scale(0.97);
   background-color: var(--bg-3);
   box-shadow: none;
 }
-button:disabled, a[download]:disabled { cursor: not-allowed; opacity: .4; }
+button:disabled,a[download]:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
 
-.btn-blue::after{background:var(--blue-glow);}
-.btn-blue:hover{border-color:var(--blue);box-shadow:var(--shadow-blue);}
+.btn-blue::after {
+  background: var(--blue-glow);
+}
+.btn-blue:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-blue);
+}
 
-.btn-green::after{background:var(--green-glow);}
-.btn-green:hover{border-color:var(--green);box-shadow:var(--shadow-green);}
+.btn-green::after {
+  background: var(--green-glow);
+}
+.btn-green:hover {
+  border-color: var(--green);
+  box-shadow: var(--shadow-green);
+}
 
-.btn-red::after{background:var(--red-glow);}
-.btn-red:hover{border-color:var(--red);box-shadow:var(--shadow-red);}
+.btn-red::after {
+  background: var(--red-glow);
+}
+.btn-red:hover {
+  border-color: var(--red);
+  box-shadow: var(--shadow-red);
+}
 
-a[download]::before { font-family: iconpack1; content: "q ";}
-a[download]::after  { background: var(--blue-glow); }
-a[download]:hover   { border-color: var(--blue); box-shadow: var(--shadow-blue); }
-a[download]         { padding-top: 0.6em; }
+a[download]::before {
+  font-family: iconpack1;
+  content: "q ";
+}
+a[download]::after {
+  background: var(--blue-glow);
+}
+a[download]:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-blue);
+}
+a[download] {
+  padding-top: 0.6em;
+}
 
-/* ── Inputs & Textareas ─────────────────────────────────────── */
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 textarea {
-  font-family:      var(--font-mono);
-  font-size:        inherit;
+  font-family: var(--font-mono);
+  font-size: inherit;
   background-color: var(--bg-input);
-  color:            var(--fg);
-  border:           1px solid var(--border);
-  border-radius:    var(--radius);
-  padding:          0.4em 0.65em;
-  outline:          none;
-  transition:       border-color var(--transition), box-shadow var(--transition);
-  width:            100%;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4em 0.65em;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
 }
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
 textarea:focus {
   border-color: var(--border-focus);
-  box-shadow:   0 0 0 3px var(--red-glow);
+  box-shadow: 0 0 0 3px var(--red-glow);
 }
-textarea { resize: both; cursor: auto; }
+textarea {
+  resize: both;
+  cursor: auto;
+}
 
-input[type="checkbox"],
-input[type="radio"] {
-  width:          auto;
-  padding:        0;
-  margin:         0;
+input[type="checkbox"],input[type="radio"] {
+  width: auto;
+  padding: 0;
+  margin: 0;
   vertical-align: middle;
-  accent-color:   var(--red);
-  cursor:         pointer;
+  accent-color: var(--red);
+  cursor: pointer;
 }
-/* ── Select ─────────────────────────────────────────────────── */
 select {
-  font-family:      var(--font-mono);
-  font-size:        inherit;
+  font-family: var(--font-mono);
+  font-size: inherit;
   background-color: var(--bg-3);
-  color:            var(--fg);
-  border:           1px solid var(--border);
-  border-radius:    var(--radius);
-  padding:          0.4em 0.65em;
-  cursor:           pointer;
-  transition:       border-color var(--transition), box-shadow var(--transition);
-  appearance:       none;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4em 0.65em;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23e03030'/%3E%3C/svg%3E");
-  background-repeat:   no-repeat;
+  background-repeat: no-repeat;
   background-position: right 0.7em center;
-  padding-right:       2em;
+  padding-right: 2em;
 }
-select:hover { border-color: var(--red); box-shadow: var(--shadow-red); }
-select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px var(--red-glow); }
+select:hover {
+  border-color: var(--red);
+  box-shadow: var(--shadow-red);
+}
+select:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-glow);
+}
 
-/* ── Icons ──────────────────────────────────────────────────── */
-[data-theme="light"] .icon { filter: invert(0); }
-[data-theme="dark"]  .icon { filter: invert(1); }
-/* ── Code block ─────────────────────────────────────────────── */
+[data-theme="light"].icon{filter:invert(0);}
+[data-theme="dark"].icon{filter:invert(1);}
+[data-theme="light"].inverted-icon{filter:invert(1);}
+[data-theme="dark"].inverted-icon{filter:invert(0);}
 .codeblock {
   background-color: var(--bg-code);
-  border:           1px solid var(--border);
-  border-radius:    var(--radius-lg);
-  width:            fit-content;
-  font-family:      var(--font-code);
-  font-size:        0.9em;
-  padding:          1em 1.2em;
-  box-shadow:       var(--shadow-md);
-  line-height:      1.55;
-  color:            #e8e8e8;
-  tab-size:         2;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: fit-content;
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  padding: 1em 1.2em;
+  box-shadow: var(--shadow-md);
+  line-height: 1.55;
+  color: #e8e8e8;
+  tab-size: 2;
 }
 pre{display:inline-block;}
-/* ── Details / Summary ──────────────────────────────────────── */
 details {
-  background:    var(--bg-2);
-  border:        1px solid var(--border);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding:       0 0.85em;
-  margin:        0.5em 0;
-  transition:    box-shadow var(--transition), border-color var(--transition);
+  padding: 0 0.85em;
+  margin: 0.5em 0;
+  transition: box-shadow var(--transition), border-color var(--transition);
 }
-details[open] { box-shadow: var(--shadow-red); border-color: var(--red); }
+details[open] {
+  box-shadow: var(--shadow-red);
+  border-color: var(--red);
+}
 details > summary {
-  cursor:      pointer;
+  cursor: pointer;
   font-weight: bold;
   user-select: none;
-  list-style:  none;
-  padding:     0.5em 0;
-  color:       var(--red);
-  display:     flex;
+  list-style: none;
+  padding: 0.5em 0;
+  color: var(--red);
+  display: flex;
   align-items: center;
-  gap:         0.4em;
+  gap: 0.4em;
 }
 details > summary::before {
-  content:    '▶';
-  display:    inline-block;
-  font-size:  0.75em;
+  content: "▶";
+  display: inline-block;
+  font-size: 0.75em;
   transition: transform 0.25s ease;
   flex-shrink: 0;
 }
-details[open] > summary::before { transform: rotate(90deg); }
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
 details > div {
   display: grid;
   grid-template-rows: 0fr;
@@ -288,173 +348,228 @@ details > div > * {
   min-height: 0;
   padding-bottom: 0.6em;
 }
-/* ── iframe ─────────────────────────────────────────────────── */
-iframe {
-  border:        none;
-  border-radius: var(--radius-lg);
-  box-shadow:    var(--shadow-md);
+details.vanilla {
+  background: initial;
+  border: initial;
+  border-radius: initial;
+  padding: initial;
+  margin: initial;
+  transition: initial;
 }
-/* ── Images ─────────────────────────────────────────────────── */
-img.bg    { background: light-dark(white, black); border-radius: var(--radius); }
-img.float { float: left; margin-right: 20px; margin-bottom: 10px; border-radius: var(--radius); }
+details.vanilla[open] {
+  box-shadow: initial;
+  border-color: initial;
+}
+details.vanilla > summary {
+  cursor: initial;
+  font-weight: initial;
+  user-select: initial;
+  list-style: initial;
+  padding: initial;
+  color: initial;
+  display: initial;
+  align-items: initial;
+  gap: initial;
+}
+details.vanilla > summary::before {
+  content: initial;
+  display: initial;
+  font-size: initial;
+  transition: initial;
+  flex-shrink: initial;
+}
+details.vanilla[open] > summary::before {
+  transform: initial;
+}
+details.vanilla > div {
+  display: initial;
+  grid-template-rows: initial;
+  transition: initial;
+  overflow: initial;
+}
+details.vanilla[open] > div {
+  grid-template-rows: initial;
+}
+details.vanilla > div > * {
+  min-height: initial;
+  padding-bottom: initial;
+}
+iframe {
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+img.bg {
+  background: light-dark(white, black);
+  border-radius: var(--radius);
+}
+img.float {
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  border-radius: var(--radius);
+}
 
-/* ── Footer ─────────────────────────────────────────────────── */
 .footer {
-  position:   fixed;
-  bottom:     6px;
-  width:      100%;
+  position: fixed;
+  bottom: 6px;
+  width: 100%;
   text-align: center;
-  font-size:  11px;
-  color:      var(--fg-dim);
+  font-size: 11px;
+  color: var(--fg-dim);
   letter-spacing: 0.04em;
   pointer-events: none;
 }
 
-/* ── Scrollbar (WebKit) ─────────────────────────────────────── */
-::-webkit-scrollbar       { width: 7px; height: 7px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--red-dim); border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--red); }
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--red-dim);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--red);
+}
 
-/* ── Horizontal rule ────────────────────────────────────────── */
 hr {
   border: none;
-  border-top: 1px solid light-dark(rgba(0,0,0,0.3), rgba(255,255,255,0.2));
+  border-top: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.2));
   margin: 2em 0;
 }
 
-/* ── Blockquote ─────────────────────────────────────────────── */
 blockquote {
-  border-left:  3px solid var(--red);
-  margin:       0;
-  padding:      0.5em 1em;
-  color:        var(--fg-dim);
-  background:   var(--bg-2);
+  border-left: 3px solid var(--red);
+  margin: 0;
+  padding: 0.5em 1em;
+  color: var(--fg-dim);
+  background: var(--bg-2);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
-.greentext{color:green;}
-/* ── Animations ─────────────────────────────────────────────── */
-@keyframes fadeIn{to{opacity:1;}}
-.fadeIn{
-  opacity:0;
-  animation:fadeIn 2s forwards;
+.greentext {
+  color: green;
 }
-/* ============================================================
-   CUSTOM ELEMENTS
-   ============================================================ */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
 
-/* ── <hover> tooltip ────────────────────────────────────────── */
 hover {
-  display:       inline-block;
-  color:         var(--red);
-  cursor:        help;
+  display: inline-block;
+  color: var(--red);
+  cursor: help;
   border-bottom: 1px dashed var(--red);
 }
 
 onhover {
-  position:       fixed;
-  z-index:        2147483647;
-  display:        none;
-  white-space:    nowrap;
-  font-size:      0.92em;
-  padding:        0.6rem 0.85rem;
-  background:     var(--bg-3);
-  color:          var(--fg);
-  border:         1px solid var(--border);
-  border-radius:  var(--radius);
-  box-shadow:     var(--shadow-md);
-  opacity:        0;
+  position: fixed;
+  z-index: 2147483647;
+  display: none;
+  white-space: nowrap;
+  font-size: 0.92em;
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-3);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
   pointer-events: none;
-  transform:      translateY(-4px);
-  transition:     opacity 0.15s ease, transform 0.15s ease;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 onhover.visible {
-  opacity:        1;
+  opacity: 1;
   pointer-events: auto;
-  transform:      translateY(0);
+  transform: translateY(0);
 }
-
-/* Minecraft-style tooltip variant */
 onhover.mchover {
-  text-align:       left;
-  border-radius:    0;
-  padding:          6px 8px;
+  text-align: left;
+  color: #fff;
+  border-radius: 0;
+  padding: 6px 8px;
   background-color: #100010;
-  border:           none;
-  box-shadow:       none;
+  border: none;
+  box-shadow: none;
   clip-path: polygon(
-    0px 4px, 4px 4px, 4px 0px,
-    calc(100% - 4px) 0px, calc(100% - 4px) 4px,
-    100% 4px, 100% calc(100% - 4px),
+    0px 4px,
+    4px 4px,
+    4px 0px,
+    calc(100% - 4px) 0px,
+    calc(100% - 4px) 4px,
+    100% 4px,
+    100% calc(100% - 4px),
     calc(100% - 4px) calc(100% - 4px),
-    calc(100% - 4px) 100%, 4px 100%,
-    4px calc(100% - 4px), 0px calc(100% - 4px)
+    calc(100% - 4px) 100%,
+    4px 100%,
+    4px calc(100% - 4px),
+    0px calc(100% - 4px)
   );
 }
-/* ============================================================
-   MINECRAFT STYLES
-   ============================================================ */
-.mc { font-family: var(--font-mc) }
 
-.mc .black        { color: #000000; }
-.mc .black.shadow { text-shadow: 3px 3px #000000; }
-.mc .dark_blue        { color: #0000AA; }
-.mc .dark_blue.shadow { text-shadow: 3px 3px #00002A; }
-.mc .dark_green        { color: #00AA00; }
-.mc .dark_green.shadow { text-shadow: 3px 3px #002A00; }
-.mc .dark_aqua        { color: #00AAAA; }
-.mc .dark_aqua.shadow { text-shadow: 3px 3px #002A2A; }
-.mc .dark_red        { color: #AA0000; }
-.mc .dark_red.shadow { text-shadow: 3px 3px #2A0000; }
-.mc .dark_purple        { color: #AA00AA; }
-.mc .dark_purple.shadow { text-shadow: 3px 3px #2A002A; }
-.mc .gold        { color: #FFAA00; }
-.mc .gold.shadow { text-shadow: 3px 3px #2A2A00; }
-.mc .gray        { color: #AAAAAA; }
-.mc .gray.shadow { text-shadow: 3px 3px #2A2A2A; }
-.mc .dark_gray        { color: #555555; }
-.mc .dark_gray.shadow { text-shadow: 3px 3px #151515; }
-.mc .blue        { color: #5555FF; }
-.mc .blue.shadow { text-shadow: 3px 3px #15153F; }
-.mc .green        { color: #55FF55; }
-.mc .green.shadow { text-shadow: 3px 3px #153F15; }
-.mc .aqua        { color: #55FFFF; }
-.mc .aqua.shadow { text-shadow: 3px 3px #153F3F; }
-.mc .red        { color: #FF5555; }
-.mc .red.shadow { text-shadow: 3px 3px #3F1515; }
-.mc .light_purple        { color: #FF55FF; }
-.mc .light_purple.shadow { text-shadow: 3px 3px #3F153F; }
-.mc .yellow        { color: #FFFF55; }
-.mc .yellow.shadow { text-shadow: 3px 3px #3F3F15; }
-.mc .white        { color: #FFFFFF; }
-.mc .white.shadow { text-shadow: 3px 3px #3F3F3F; }
-.mc .bold          { font-weight: bold; }
-.mc .strikethrough { text-decoration: line-through; }
-.mc .underline     { text-decoration: underline; }
-.mc .italic        { font-style: italic; }
-.mc .shadow        { text-shadow: 3px 3px #3F3F3F; }
-
-/* ── MC Item Slot ───────────────────────────────────────────── */
+.mc{font-family:var(--font-mc);line-height:1em}
+.mc .black{color:#000}
+.mc .black.shadow{text-shadow:3px 3px #000}
+.mc .dark_blue{color:#00a}
+.mc .dark_blue.shadow{text-shadow:3px 3px #00002a}
+.mc .dark_green{color:#0a0}
+.mc .dark_green.shadow{text-shadow:3px 3px #002a00}
+.mc .dark_aqua{color:#0aa}
+.mc .dark_aqua.shadow{text-shadow:3px 3px #002a2a}
+.mc .dark_red{color:#a00}
+.mc .dark_red.shadow{text-shadow:3px 3px #2a0000}
+.mc .dark_purple{color:#a0a}
+.mc .dark_purple.shadow{text-shadow:3px 3px #2a002a}
+.mc .gold{color:#fa0}
+.mc .gold.shadow{text-shadow:3px 3px #2a2a00}
+.mc .gray{color:#aaa}
+.mc .gray.shadow{text-shadow:3px 3px #2a2a2a}
+.mc .dark_gray{color:#555}
+.mc .dark_gray.shadow{text-shadow:3px 3px #151515}
+.mc .blue{color:#55f}
+.mc .blue.shadow{text-shadow:3px 3px #15153f}
+.mc .green{color:#5f5}
+.mc .green.shadow{text-shadow:3px 3px #153f15}
+.mc .aqua{color:#5ff}
+.mc .aqua.shadow{text-shadow:3px 3px #153f3f}
+.mc .red{color:#f55}
+.mc .red.shadow{text-shadow:3px 3px #3f1515}
+.mc .light_purple{color:#f5f}
+.mc .light_purple.shadow{text-shadow:3px 3px #3f153f}
+.mc .yellow{color:#ff5}
+.mc .yellow.shadow{text-shadow:3px 3px #3f3f15}
+.mc .white{color:#fff}
+.mc .shadow,.mc .white.shadow{text-shadow:3px 3px #3f3f3f}
+.mc .bold{font-weight:700}
+.mc .strikethrough{text-decoration:line-through}
+.mc .underline{text-decoration:underline}
+.mc .italic{font-style:italic}
 .mcslot {
-  height:    60px;
+  height: 60px;
   min-width: 60px;
-  width:     auto;
-  padding:   0;
-  margin:    0;
+  width: auto;
+  padding: 0;
+  margin: 0;
   background: light-dark(#8b8b8b, #555555);
-  border:    2px solid light-dark(#373737, #1a1a1a);
-  box-shadow:
-    inset -2px -2px 0 light-dark(#555555, #777777),
-    inset  2px  2px 0 light-dark(#c6c6c6, #2e2e2e);
-  display:        inline-flex;
-  align-items:    center;
+  border: 2px solid light-dark(#373737, #1a1a1a);
+  box-shadow: inset -2px -2px 0 light-dark(#555555, #777777),
+    inset 2px 2px 0 light-dark(#c6c6c6, #2e2e2e);
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
   vertical-align: top;
-  transition:     box-shadow 0.1s ease;
+  transition: box-shadow 0.1s ease;
 }
 .mcslot:hover {
-  box-shadow:
-    inset -2px -2px 0 light-dark(#555555, #999999),
-    inset  2px  2px 0 light-dark(#e0e0e0, #3a3a3a),
-    0 0 8px rgba(224, 48, 48, 0.3);
+  box-shadow: inset -2px -2px 0 light-dark(#555555, #999999),
+    inset 2px 2px 0 light-dark(#e0e0e0, #3a3a3a), 0 0 8px rgba(224, 48, 48, 0.3);
 }
