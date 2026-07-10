@@ -120,7 +120,7 @@
       applyFitLayout();
       const panzoom=Panzoom(panzoomEl,{
         maxScale:1000,
-        minScale:1,
+        minScale:0.01,
       });
       function updateLabel(){
         zoomLabel.textContent=Math.round(panzoom.getScale()*100)+'%';
