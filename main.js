@@ -7,6 +7,8 @@
     s.src=src;
     document.body.appendChild(s);
   }
-  loadScript(`${hash}/files/main.js#/`);
+  loadScript(`${hash}/files/main.js`);
   loadScript(`${hash}/files/navbar.js`);
+  var title=document.querySelector('title');
+  if(title!==null)title.innerText+=" - Nobody";
 })();

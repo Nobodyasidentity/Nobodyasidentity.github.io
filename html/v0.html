@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head><script defer src="/main.js"></script><title>Nobody</title>
+  <head>
+    <meta charset="UTF-8">
+    <script defer src="/main.js"></script>
+    <title>HTML IDE v0</title>
     <style>
       div.content{
         border-style: dashed;
@@ -31,32 +34,28 @@
     <button onclick="gen()">Generate</button>
     <button onclick="document.getElementById('linkSettings').style.display=(this.innerHTML=='Link |')?'inline-block':'none';this.innerHTML=(this.innerHTML=='Link |')?'Link >':'Link |'">Link |</button>
     <div style="display:none" id="linkSettings">
-      <input type="checkbox" id="generateonload" checked=true><label for="generateonload"> Generate On Load</label>
-      <!--<select id="encoding"><option value="normal">Normal</option></select>-->
+      <input type="checkbox" id="generateonload" checked=true><label for="generateonload"> Generate on Load</label>
       <button onclick="genLink()">Copy Permanent Link</button>
     </div><br><br>
-    <div class="content"><iframe id="iframe" srcdoc='<html data-theme="dark"><link href="/files/style.css" rel="stylesheet" type="text/css" media="all"></html>'></iframe></div>
+    <div class="content"><iframe id="iframe" srcdoc='<html data-theme="dark"><script defer src="/files/main.js"></script></html>'></iframe></div>
     <script>
       function getUrlVars(){var vars={};var parts=window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,function(m,key,value){vars[key]=value;});return vars;}
-      const code = document.getElementById('code')
-      const iframe = document.getElementById('iframe')
-      var query = getUrlVars()
+      const code = document.getElementById('code');
+      const iframe = document.getElementById('iframe');
+      var query = getUrlVars();
       function gen(){
-        iframe.contentDocument.body.innerHTML = code.value
+        iframe.src=undefined;
+        iframe.contentDocument.body.innerHTML = code.value;
       }
       function trygen(){
         if(document.getElementById('doautoupd').checked==true){gen()}
       }
       function copy2clipboard(txt){
-        navigator.clipboard.writeText(txt)
-        alert('copied: '+txt)
+        navigator.clipboard.writeText(txt);
+        alert('copied: '+txt);
       }
       function genLink(){
-        if(document.getElementById('encoding').value=='LZstr'){
-          copy2clipboard('https://'+window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'encoding=LZstr&code='+LZString.compress(encodeURIComponent(code.value)));
-        }else{
-          copy2clipboard('https://'+window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'code='+encodeURIComponent(btoa(encodeURIComponent(code.value))));
-        }
+        copy2clipboard('https://'+window.location.hostname+window.location.pathname+'?'+((document.getElementById('generateonload').checked)?'genonload=&':'')+'code='+encodeURIComponent(btoa(encodeURIComponent(code.value))));
       }
       function onLoad(){
         if (query['code']!=undefined){
@@ -68,7 +67,7 @@
         }
         if (query['genonload']!=undefined){gen()}
       }
-      window.onload=onLoad
+      window.onload=onLoad;
     </script>
   </body>
 </html>
