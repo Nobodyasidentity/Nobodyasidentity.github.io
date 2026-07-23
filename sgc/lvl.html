@@ -5,6 +5,7 @@
   <script defer src="/main.js"></script>
   <title>SGC GamerBot Public Info Lookup</title>
   <style>
+    body{background-color:black;}
     table{margin-top:10px;}
     th{text-align:left;padding:5px 10px;}
     #progressContainer{
@@ -26,7 +27,7 @@
       left:0;
       z-index:0;
     }
-    #progressText,#messageEstimate{
+    #progressText,#messageEstimate,#timeEstimate{
       margin-top:5px;
       font-size:14px;
     }
@@ -38,15 +39,33 @@
       left:0;
       color:#fff;
     }
+    code{
+      font-family:var(--font-code);
+      background:black;
+      color:white;
+      border-radius:2px;
+      padding:2px;
+    }
+    #userId{
+      width:auto;
+    }
+    #estimatesBlock{
+      display:grid;
+      grid-template-columns:max-content max-content max-content max-content;
+      justify-content:center;
+    }
+    #estimates{
+      transform:translateY(-25%);
+    }
   </style>
 </head>
 <body>
-  <div style="margin:auto;text-align:left;max-width:600px;padding:0px 1.5rem 1.5rem 1.5rem;">
-    <button onclick="fetchInfo(User.id.value||defaultId)">Fetch Info</button>
+  <div style="margin:auto;text-align:left;max-width:750px;padding:0px 1.5rem 1.5rem 1.5rem;">
+    <center>
     <table>
       <tr>
-        <th>User ID:</th>
-        <th><input id="userId" placeholder="Example: 821999148156715029" type="number"></th>
+        <th>Användar ID:</th>
+        <th><input id="userId" placeholder="Exempel: 821999148156715029" type="number"> <button for="userId" onclick="fetchInfo(User.id.value||defaultId)" id="fetchButton">Fetch Info</button></th>
       </tr>
       <tr>
         <th>Level:</th>
@@ -57,23 +76,49 @@
         <th id="userXp">?</th>
       </tr>
       <tr>
-        <th>Frame:</th>
-        <th><img style="max-width:200px;" id="userFrame"></th>
+        <th>Ram:</th>
+        <th><span id="userFrameBlock"></span><br><img style="max-width:200px;" id="userFrame"></th>
       </tr>
     </table>
     <div id="progressContainer">
       <div id="progressBar"></div>
         <div id="progressText"></div>
+    </div><br>
+    <div id="estimatesBlock">
+      <div>Uppskattat </div>
+      <div id="estimates">
+        <div id="messageEstimate"></div>
+        <div id="timeEstimate"></div>
+      </div>
+      <div> för att gå upp i nivå</div>
     </div>
-    <div id="messageEstimate"></div>
+    </center>
     <details>
-      <summary>raw data</summary>
+      <summary>Rå data</summary>
       <pre id="out" class="codeblock"></pre>
+    </details>
+    <details open>
+      <summary>Hur SGCs XP system fungerar</summary>
+      <ul>
+        <li>XP tjänas genom att skicka meddelanden på servern.</li>
+        <li>Du kan bara få XP ungefär en gång var tionde minut.</li>
+        <li>Vanliga meddelanden ger vanligtvis <b>3 XP</b>.</li>
+        <li>Upprepade/skräpmeddelanden ger bara <b>1 XP</b>.</li>
+        <li>Meddelanden som skickas innan nedkylningstiden är slut ger <b>0 XP</b>.</li>
+        <li>XP som krävs för att gå upp i nivå baseras på: <code>level<sup>2</sup></code>.</li>
+        <li>När man går upp i nivå återställs XP till 0.</li>
+      </ul>
+      <p>
+        Exempel:<br>
+        Nivå 10 → 100 XP behövs<br>
+        Nivå 20 → 400 XP behövs
+      </p>
     </details>
   </div>
   <script>
     const defaultId="821999148156715029";
     const out=document.getElementById('out');
+    const fetchButton=document.getElementById('fetchButton');
 
     let User={
       id:document.getElementById('userId'),
@@ -84,17 +129,24 @@
     const hash=location.hash.slice(1);
     async function getP(UID){
       try{
+        fetchButton.innerText="Fetching SGC's public API...";
         const response=await fetch(`https://api.sgc.se/public_api/user/${UID}`);
         if(!response.ok)throw new Error("Failed to fetch");
         return await response.json();
-      }catch(error){alert(error);}
+      }catch(error){fetchButton.innerText=error;}
+    }
+    function min2hourMin(totalMinutes){
+      const hours=Math.floor(totalMinutes/60),minutes=totalMinutes%60;
+      return (hours>0?`${hours}h`:"")+((hours>0&&minutes>0)?", ":"")+(minutes>0?`${minutes}m`:"");
     }
     function updateUI(data){
       if(!data)return;
+      fetchButton.innerText="Fetching Frame...";
       User.frame.src=`https://api.sgc.se/public_api/frame/${data.profileFrame}`;
+      document.getElementById('userFrameBlock').innerText=`ID: ${data.profileFrame}, Färg: ${data.colorHexCode}`
       User.frame.style.backgroundColor=data.colorHexCode;
       User.id.value=data.userID;
-      User.id.placeholder=`Recent: ${data.userID}`;
+      User.id.placeholder=`Nyligen: ${data.userID}`;
       User.level.innerText=data.level;
       User.xp.innerText=data.xp;
       const xpNeeded=data.level**2;
@@ -103,8 +155,10 @@
       document.getElementById("progressBar").style.width=percent+"%";
       document.getElementById("progressText").innerText=`${data.xp} / ${xpNeeded} XP (${percent.toFixed(1)}%)`;
       const minMessages=Math.ceil(xpLeft/3);
-      const maxMessages=Math.ceil(xpLeft/1+1);
-      document.getElementById("messageEstimate").innerText=`Estimated ${minMessages}–${maxMessages} messages to level up`;
+      const maxMessages=Math.ceil(xpLeft/1)+1;
+      document.getElementById("messageEstimate").innerText=`${minMessages}–${maxMessages} meddelanden`;
+      document.getElementById("timeEstimate").innerText=`${min2hourMin(minMessages*10)} – ${min2hourMin(maxMessages*10)}`;
+      fetchButton.innerText="Fetch Info";
     }
     function fetchInfo(UID){
       getP(UID).then(data=>{
@@ -117,11 +171,12 @@
         location.hash=UID;
         localStorage.setItem('SGCLastUserID',UID);
       });
+      fetchButton.innerText="Fetch Info";
     }
     (()=>{
       const savedId=localStorage.getItem('SGCLastUserID');
       const idToUse=hash||savedId||defaultId;
-      User.id.placeholder=`Example: ${defaultId}`
+      User.id.placeholder=`Exempel: ${defaultId}`
       fetchInfo(idToUse);
     })();
   </script>
