@@ -7,8 +7,8 @@ const app=Fastify({logger:false});
 const docs=path.resolve(__dirname,"docs");
 
 const blacklist=[
-    ".git",
-    "node_modules"
+    ".git/",
+    "node_modules/"
 ];
 const PORT=3000;
 
