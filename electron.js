@@ -1,89 +1,79 @@
-const { app, BrowserWindow, protocol, net, Menu, nativeImage, shell } = require('electron');
-const path = require('path');
-const fs = require('fs');
+const{app,BrowserWindow,protocol,net,Menu,nativeImage,shell}=require('electron');
+const path=require('path');
+const fs=require('fs');
 
 Menu.setApplicationMenu(null);
-
 protocol.registerSchemesAsPrivileged([{
-  scheme: 'app',
-  privileges: {
-    standard: true,
-    secure: true,
-    supportFetchAPI: true
+  scheme:'app',
+  privileges:{
+    standard:true,
+    secure:true,
+    supportFetchAPI:true
   }
 }]);
-
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    icon: nativeImage.createFromPath(path.join(__dirname, 'files/icon.png')),
-    webPreferences: {
-      contextIsolation: false,
+const createWindow=()=>{
+  const win=new BrowserWindow({
+    width:800,
+    height:600,
+    icon:nativeImage.createFromPath(path.join(__dirname,'docs/files/icon.png')),
+    webPreferences:{
+      contextIsolation:false,
     },
-    show: false,
+    show:false,
   });
   win.loadURL('app:///index.html');
   win.maximize();
   win.show();
 };
-
-app.whenReady().then(() => {
-  protocol.handle('app', (request) => {
-    let p = request.url.slice('app://'.length).replace(/^[^/]*/, '');
-    p = p.split('?')[0].split('#')[0];
-    if (!p || p === '/') p = '/index.html';
-
-    let fullPath = path.join(__dirname, p);
-
-    if (fs.existsSync(fullPath) && fs.statSync(fullPath).isDirectory()) {
-      fullPath = path.join(fullPath, 'index.html');
-    } else if (!path.extname(p)) {
-      fullPath += '.html';
+app.whenReady().then(()=>{
+  protocol.handle('app',(request)=>{
+    let p=request.url.slice('app://'.length).replace(/^[^/]*/,'');
+    p=p.split('?')[0].split('#')[0];
+    if(!p||p==='/')p='/index.html';
+    let fullPath=path.join(__dirname,'docs',p);
+    if(fs.existsSync(fullPath)&&fs.statSync(fullPath).isDirectory()){
+      fullPath=path.join(fullPath,'index.html');
+    }else if(!path.extname(p)){
+      fullPath+='.html';
     }
-
-    return net.fetch('file://' + fullPath);
+    return net.fetch('file://'+fullPath);
   });
-
-  app.on('web-contents-created', (event, contents) => {
-    contents.setWindowOpenHandler(({ url }) => {
-      if (url.startsWith('app://')) {
+  app.on('web-contents-created',(event,contents)=>{
+    contents.setWindowOpenHandler(({url})=>{
+      if(url.startsWith('app://')){
         BrowserWindow.fromWebContents(contents)?.loadURL(url);
-      } else {
+      }else{
         shell.openExternal(url);
       }
-      return { action: 'deny' };
+      return{action:'deny'};
     });
-
-    contents.on('will-navigate', (event, url) => {
-      if (!url.startsWith('app://')) {
+    contents.on('will-navigate',(event,url)=>{
+      if(!url.startsWith('app://')){
         event.preventDefault();
         shell.openExternal(url);
       }
     });
-
-    contents.on('did-finish-load', () => {
+    contents.on('did-finish-load',()=>{
       contents.executeJavaScript(`
-        new Promise(resolve => {
-          const check = () => {
-            const href = document.querySelector('link[rel="icon"]')?.href || '';
-            if (href) return resolve(href);
-            setTimeout(check, 100);
+        new Promise(resolve=>{
+          const check=()=>{
+            const href=document.querySelector('link[rel="icon"]')?.href||'';
+            if(href)return resolve(href);
+            setTimeout(check,100);
           };
           check();
         })
-      `).then(href => {
-        if (!href) return;
-        const win = BrowserWindow.fromWebContents(contents);
-        if (!win) return;
-        const localPath = href.startsWith('app://')
-          ? path.join(__dirname, href.slice('app://'.length).replace(/^[^/]*/, ''))
-          : path.join(__dirname, 'files/icon.png');
-        const icon = nativeImage.createFromPath(localPath);
-        if (!icon.isEmpty()) win.setIcon(icon);
+      `).then(href=>{
+        if(!href)return;
+        const win=BrowserWindow.fromWebContents(contents);
+        if(!win)return;
+        const localPath=href.startsWith('app://')
+          ?path.join(__dirname,'docs',href.slice('app://'.length).replace(/^[^/]*/,''))
+          :path.join(__dirname,'docs/files/icon.png');
+        const icon=nativeImage.createFromPath(localPath);
+        if(!icon.isEmpty())win.setIcon(icon);
       });
     });
   });
-
   createWindow();
 });
