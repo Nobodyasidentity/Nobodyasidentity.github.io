@@ -120,7 +120,7 @@ class URIConverter{
         pyc:"application/x-python-code",
         jar:"application/java-archive",
         pyw:"text/x-python",
-        tar:"application/x-tar"
+        mrpack:"application/x-modrinth-modpack+zip"
       };
     static resolveType(t){let e=t.name.split(".").pop().toLowerCase();return URIConverter.MIME_OVERRIDES[e]||t.type||"application/octet-stream"}static formatBytes(t){return t<1024?`${t} B`:t<1048576?`${(t/1024).toFixed(1)} KB`:`${(t/1048576).toFixed(2)} MB`}static convert(t){return new Promise((e,a)=>{let i=URIConverter.resolveType(t),n=new FileReader;n.onload=a=>{let n=a.target.result,r=n.split(";")[0].slice(5);r!==i&&(n=`data:${i};base64,`+n.split(",")[1]),e({uri:n,mime:i,size:t.size,name:t.name})},n.onerror=()=>a(Error("Failed to read file")),n.readAsDataURL(t)})}static decodeText(t){return decodeURIComponent(atob(t.split(",")[1]).split("").map(t=>"%"+t.charCodeAt(0).toString(16).padStart(2,"0")).join(""))}static async fromUrl(t){let e;try{e=await fetch(t)}catch{e=await fetch("https://corsproxy.io/?"+encodeURIComponent(t))}if(!e.ok)throw Error(`HTTP ${e.status}`);let a=await e.blob(),i=t.split("/").pop().split("?")[0]||"file",n=new File([a],i,{type:a.type});return URIConverter.convert(n)}
 }

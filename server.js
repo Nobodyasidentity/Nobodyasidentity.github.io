@@ -12,9 +12,17 @@ const blacklist=[
 ];
 const PORT=3000;
 
-async function reply404(reply){
+async function replyError(reply){
     reply.code(404).type("text/html");
-    return reply.send(await fs.readFile(path.join(docs,"404.html")));
+    return reply.send(await fs.readFile(path.join(__dirname,"error.html")));
+}
+async function reply404(reply){
+    try{
+        reply.code(404).type("text/html");
+        return reply.send(await fs.readFile(path.join(docs,"404.html")));
+    }catch{
+        return replyError(reply);
+    }
 }
 process.on('SIGINT',function(){
     console.log("\x1b[33m▶\x1b[38;5;244m Caught interrupt signal\x1b[0m");
@@ -22,29 +30,34 @@ process.on('SIGINT',function(){
 });
 
 async function handleRequest(req,reply){
-    const p=decodeURIComponent(req.params["*"]||"");
-    if(p===".env"){return reply404(reply)}
-    for(const dir of blacklist){if(p.startsWith(dir)){return reply404(reply)}}
-    if(p&&!path.extname(p)&&!req.raw.url.endsWith("/")){
-        try{
-            const index=path.resolve(docs,p,"index.html");
-            if(index.startsWith(docs)&&(await fs.stat(index)).isFile()){
-                return reply.redirect(req.raw.url+"/");
-            }
-        }catch{}
+    try{
+        const p=decodeURIComponent(req.params["*"]||"");
+        if(p===".env"){return reply404(reply)}
+        for(const dir of blacklist){if(p.startsWith(dir)){return reply404(reply)}}
+        if(p&&!path.extname(p)&&!req.raw.url.endsWith("/")){
+            try{
+                const index=path.resolve(docs,p,"index.html");
+                if(index.startsWith(docs)&&(await fs.stat(index)).isFile()){
+                    return reply.redirect(req.raw.url+"/");
+                }
+            }catch{}
+        }
+        const files=p?[p,path.join(p,"index.html"),...(path.extname(p)?[]:[p+".html"])]:["index.html"];
+        for(const file of files){
+            const full=path.resolve(docs,file);
+            if(!full.startsWith(docs))continue;
+            try{
+                if((await fs.stat(full)).isFile()){
+                    reply.type(mime.lookup(full)||"application/octet-stream");
+                    return reply.send(await fs.readFile(full));
+                }
+            }catch{}
+        }
+        return reply404(reply);
+    }catch(err){
+        console.warn(`\x1b[31m✗ Error: \x1b[0m${err}\x1b[0m`);
+        return replyError(reply);
     }
-    const files=p?[p,path.join(p,"index.html"),...(path.extname(p)?[]:[p+".html"])]:["index.html"];
-    for(const file of files){
-        const full=path.resolve(docs,file);
-        if(!full.startsWith(docs))continue;
-        try{
-            if((await fs.stat(full)).isFile()){
-                reply.type(mime.lookup(full)||"application/octet-stream");
-                return reply.send(await fs.readFile(full));
-            }
-        }catch{}
-    }
-    return reply404(reply);
 }
 app.get("/*",handleRequest);
 
