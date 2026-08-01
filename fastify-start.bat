@@ -1,7 +1,7 @@
 @echo off
-node server &&(
+npm run server &&(
     echo start.bat complete. Press any key to continue...
-    pause > nul
+    pause
 )||(
     echo start.bat failed. Press any key to continue...
     pause > nul

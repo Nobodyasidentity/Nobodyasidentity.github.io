@@ -16,8 +16,12 @@ async function reply404(reply){
     reply.code(404).type("text/html");
     return reply.send(await fs.readFile(path.join(docs,"404.html")));
 }
+process.on('SIGINT',function(){
+    console.log("\x1b[33m▶\x1b[38;5;244m Caught interrupt signal\x1b[0m");
+    process.exit(0);
+});
 
-app.get("/*",async(req,reply)=>{
+async function handleRequest(req,reply){
     const p=decodeURIComponent(req.params["*"]||"");
     if(p===".env"){return reply404(reply)}
     for(const dir of blacklist){if(p.startsWith(dir)){return reply404(reply)}}
@@ -41,9 +45,11 @@ app.get("/*",async(req,reply)=>{
         }catch{}
     }
     return reply404(reply);
-});
-console.log(`Starting server on port: ${PORT}`);
+}
+app.get("/*",handleRequest);
+
+console.log(`\x1b[38;5;244mStarting server on port: \x1b[34m${PORT}\x1b[0m`);
 app.listen({port:PORT},err=>{
-    if(err)throw err;
-    console.log(`Server is online - preview at http://127.0.0.1:${PORT}`);
+    if(err){console.warn(`\x1b[31m✗ Error: \x1b[0m${err}\x1b[0m`);}
+    else{console.log(`\x1b[32m√\x1b[0m Server is online\x1b[38;5;244m - preview at \x1b[36mhttp://127.0.0.1:${PORT}\x1b[0m`);}
 });
