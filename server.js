@@ -62,7 +62,7 @@ async function handleRequest(req,reply){
 app.get("/*",handleRequest);
 
 console.log(`\x1b[38;5;244mStarting server on port: \x1b[34m${PORT}\x1b[0m`);
-app.listen({port:PORT},err=>{
+app.listen({port:PORT,host:'0.0.0.0'},err=>{
     if(err){console.warn(`\x1b[31m✗ Error: \x1b[0m${err}\x1b[0m`);}
     else{console.log(`\x1b[32m√\x1b[0m Server is online\x1b[38;5;244m - preview at \x1b[36mhttp://127.0.0.1:${PORT}\x1b[0m`);}
 });
