@@ -10,7 +10,7 @@ const blacklist=[
     ".git/",
     "node_modules/"
 ];
-const PORT=3000;
+const PORT=80;
 
 async function replyError(reply){
     reply.code(404).type("text/html");
