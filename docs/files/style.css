@@ -43,7 +43,14 @@
   --font-sgc: sansumu, monospace;
 }
 
-[data-theme="light"]{color-scheme: light;}[data-theme="dark"]{color-scheme: dark;}
+[data-theme="light"]{color-scheme: light;}
+[data-theme="dark"]{color-scheme: dark;}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]){color-scheme:dark;}
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme]){color-scheme:light;}
+}
 ::selection{background:var(--red-sel);color:inherit;}
 ::-moz-selection{background:var(--red-sel);color:inherit;}
 
@@ -75,7 +82,9 @@
   font-family: sansumu;
   src: url("/sgc/sansumu.ttf");
 }
-
+*{
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 *,*::before,*::after{
   box-sizing: border-box;
   font-family: inherit;
